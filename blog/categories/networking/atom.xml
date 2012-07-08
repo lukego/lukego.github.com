@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Networking | Luke Gorrie's weblog]]></title>
   <link href="http://lukego.github.com/blog/categories/networking/atom.xml" rel="self"/>
   <link href="http://lukego.github.com/"/>
-  <updated>2012-07-08T05:14:04+02:00</updated>
+  <updated>2012-07-08T05:15:23+02:00</updated>
   <id>http://lukego.github.com/</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -97,7 +97,7 @@ end
 
 <p>and with any luck I'll find an excuse to see how it looks in a hardware description language like Verilog too.</p>
 
-<p>That's all. I really appreciate shared memory. Hardware people use it all the time. It's not the most high level communication protocol around, but it is simple and accessible, and can be fun for software people too. I think so, anyway :-)</p>
+<p>That's all. I really appreciate shared memory. Hardware people use it all the time. It's not the most high level communication protocol around, but it is simple and accessible, and it can be fun for software people too. I think so, anyway :-)</p>
 ]]></content>
   </entry>
   
