@@ -106,7 +106,7 @@
 
 <p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it&#8217;s the glue that holds our computers together.</p>
 
-<p>Shared memory is a simple mechanism. There are some physical RAM chips in the computer and these chips are being accessed by many different programs. The programs are very loosely coupled. They are written in completely different programming languages, they are executing on different microchips, and some of them are implemented as hardware rather than software. The programs all share a common abstraction: LOAD and STORE operations towards a big array of machine words. The rest is a matter of conventions, design patterns, and data structures. Away we go!</p>
+<p>Shared memory is a simple mechanism. Many different programs are concurrently accessing the physical RAM chips in the ocmputer. The programs are written in completely different programming languages, they are executing on different microchips, and some of them are implemented as hardware rather than software. The programs all share a common abstraction: LOAD and STORE operations towards a big array of machine words. The rest is a matter of conventions, design patterns, and data structures. That&#8217;s all we need!</p>
 
 <p>I really enjoy the versatility. How sweet it is to be able to drive hardware memory controller so directly.</p>
 
