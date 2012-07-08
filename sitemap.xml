@@ -1,21 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://lukego.github.com/blog/2012/07/07/new-blog/</loc>
+        <loc>http://blog.lukego.com//blog/2012/07/07/new-blog/</loc>
         <lastmod>2012-07-08T04:19:39+02:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/
-        </loc>
+        <loc>http://blog.lukego.com//blog/2012/07/08/shared-memory-a-moment-of-appreciation/</loc>
         <lastmod>2012-07-08T05:15:22+02:00</lastmod>
     </url>
     <url>
-        <loc>http://lukego.github.com/blog/archives/</loc>
+        <loc>http://blog.lukego.com//blog/archives/</loc>
         <lastmod>2012-07-08T05:15:22+02:00</lastmod>
     </url>
     <url>
-        <loc>http://lukego.github.com/</loc>
+        <loc>http://blog.lukego.com//</loc>
         <lastmod>2012-07-08T05:15:22+02:00</lastmod>
     </url>
 </urlset>

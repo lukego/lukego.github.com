@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Luke Gorrie's weblog]]></title>
-  <link href="http://lukego.github.com/atom.xml" rel="self"/>
-  <link href="http://lukego.github.com/"/>
-  <updated>2012-07-08T05:15:23+02:00</updated>
-  <id>http://lukego.github.com/</id>
+  <link href="http://blog.lukego.com//atom.xml" rel="self"/>
+  <link href="http://blog.lukego.com//"/>
+  <updated>2012-07-08T23:03:25+02:00</updated>
+  <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Shared memory: A moment of appreciation]]></title>
-    <link href="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/"/>
+    <link href="http://blog.lukego.com//blog/2012/07/08/shared-memory-a-moment-of-appreciation/"/>
     <updated>2012-07-08T03:46:00+02:00</updated>
-    <id>http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation</id>
+    <id>http://blog.lukego.com//blog/2012/07/08/shared-memory-a-moment-of-appreciation</id>
     <content type="html"><![CDATA[<p>Today I&#8217;m feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
 
 <p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it&#8217;s the glue that holds our computers together.</p>
@@ -123,9 +123,9 @@
   
   <entry>
     <title type="html"><![CDATA[New blog!]]></title>
-    <link href="http://lukego.github.com/blog/2012/07/07/new-blog/"/>
+    <link href="http://blog.lukego.com//blog/2012/07/07/new-blog/"/>
     <updated>2012-07-07T03:56:00+02:00</updated>
-    <id>http://lukego.github.com/blog/2012/07/07/new-blog</id>
+    <id>http://blog.lukego.com//blog/2012/07/07/new-blog</id>
     <content type="html"><![CDATA[<p>New blog! This time I&#8217;m taking Octopress for a spin. I really like the idea of markdown for text and static generation of content. Reminds me a bit of using <a href="http://www.latte.org/latte.html" title="Latte">Latte</a> in the old days. Latte became a dead-end when bitrot set in on the toolchain for generating pages. Let&#8217;s see how this goes.</p>
 
 <p>I&#8217;ve made a homepage <a href="http://lukego.com/">lukego.com</a> now to keep track of my comings and goings and my old blog was <a href="http://lukego.livejournal.com/">lukego.livejournal.com</a>.</p>
