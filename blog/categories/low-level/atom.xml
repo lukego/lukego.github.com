@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Low-Level | Luke Gorrie's weblog]]></title>
+  <link href="http://lukego.github.com/blog/categories/low-level/atom.xml" rel="self"/>
+  <link href="http://lukego.github.com/"/>
+  <updated>2012-07-08T04:40:23+02:00</updated>
+  <id>http://lukego.github.com/</id>
+  <author>
+    <name><![CDATA[Luke Gorrie]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shared memory: A moment of appreciation]]></title>
+    <link href="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/"/>
+    <updated>2012-07-08T03:46:00+02:00</updated>
+    <id>http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation</id>
+    <content type="html"><![CDATA[<p>Today I'm feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
+
+<p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it's the glue that holds our computers together.</p>
+
+<p>Shared memory is a simple mechanism. There are some physical RAM chips in the computer and these chips are being accessed by many different programs. The programs are very loosely coupled. They are written in completely different programming languages, they are executing on different microchips, and some of them are implemented as hardware rather than software. The programs all share a common abstraction: LOAD and STORE operations towards a big array of machine words. The rest is a matter of conventions, design patterns, and data structures. Away we go!</p>
+
+<p>I really enjoy the versatility. How sweet it is to be able to drive hardware memory controller so directly.</p>
+
+<h3>Playing around</h3>
+
+<p>Just for fun, here's a shared memory interface I'm playing with for ethernet networking. That is: to use shared memory to send and receive packets between a "host" and a "device". The host and device can be written in any programming language, or indeed in hardware, and this is roughly how hardware packet I/O interfaces really look.</p>
+
+<p>Here's an example memory layout. I sketched it using C syntax and defined a packet <a href="http://en.wikipedia.org/wiki/Circular_buffer">ring buffer</a> for transmision in each direction.</p>
+
+<p>```c
+enum {</p>
+
+<pre><code>RING_SIZE = 1024,
+PACKET_SIZE = 1504,
+</code></pre>
+
+<p>};</p>
+
+<p>// One ethernet packet.
+struct packet
+{</p>
+
+<pre><code>unsigned int length;         // length of packet
+char data[PACKET_SIZE];      // on-the-wire packet data
+</code></pre>
+
+<p>};</p>
+
+<p>// Ring buffer containing ethernet packets.
+struct ring
+{</p>
+
+<pre><code>unsigned int head;           // position of first unread packet
+unsigned int tail;           // position of last unread packet
+unsigned int overflow_count; // number of packets dropped due to overflow
+struct packet packets[RING_SIZE];
+</code></pre>
+
+<p>};</p>
+
+<p>// Ethernet device with two ring buffers for transmit and receive.
+struct dev
+{</p>
+
+<pre><code>unsigned int magic;          // magic number identifying the structure
+unsigned int version;        // version of memory layout
+struct ring dev2host;        // ring of packets from host to device
+struct ring host2dev;        // ring of packets from device to host
+</code></pre>
+
+<p>};
+```</p>
+
+<p>Here's a snippet using the data structure from C:</p>
+
+<p>```c
+bool is_empty(struct ring ring) {</p>
+
+<pre><code>return ring-&gt;head == ring-&gt;tail;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>and here's a snippet from LuaJIT:</p>
+
+<p><code>lua
+function is_full (ring)
+   return ring.head == (ring.tail + 1) % C.RING_SIZE
+end
+</code></p>
+
+<p>and with any luck I'll find an excuse to see how it looks in a hardware description language like Verilog too.</p>
+
+<p>That's all. I really appreciate shared memory. Hardware people use it all the time. It's not the most high level communication protocol around, but it is simple and accessible, and can be fun for software people too. I think so, anyway :-)</p>
+]]></content>
+  </entry>
+  
+</feed>

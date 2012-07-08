@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Luke Gorrie's weblog</title>
+  <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="Today I&#8217;m feeling appreciative of shared memory. There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,20 +24,32 @@
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Luke Gorrie's weblog" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33510863-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Luke Gorrie's weblog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>Cooking up some open-source networking</h2>
   
 </hgroup>
 
@@ -65,6 +77,179 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared Memory: A Moment of Appreciation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-08T03:46:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I&#8217;m feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
+
+<p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it&#8217;s the glue that holds our computers together.</p>
+
+<p>Shared memory is a simple mechanism. There are some physical RAM chips in the computer and these chips are being accessed by many different programs. The programs are very loosely coupled. They are written in completely different programming languages, they are executing on different microchips, and some of them are implemented as hardware rather than software. The programs all share a common abstraction: LOAD and STORE operations towards a big array of machine words. The rest is a matter of conventions, design patterns, and data structures. Away we go!</p>
+
+<p>I really enjoy the versatility. How sweet it is to be able to drive hardware memory controller so directly.</p>
+
+<h3>Playing around</h3>
+
+<p>Just for fun, here&#8217;s a shared memory interface I&#8217;m playing with for ethernet networking. That is: to use shared memory to send and receive packets between a &#8220;host&#8221; and a &#8220;device&#8221;. The host and device can be written in any programming language, or indeed in hardware, and this is roughly how hardware packet I/O interfaces really look.</p>
+
+<p>Here&#8217;s an example memory layout. I sketched it using C syntax and defined a packet <a href="http://en.wikipedia.org/wiki/Circular_buffer">ring buffer</a> for transmision in each direction.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">enum</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">RING_SIZE</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">PACKET_SIZE</span> <span class="o">=</span> <span class="mi">1504</span><span class="p">,</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// One ethernet packet.</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">packet</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>         <span class="c1">// length of packet</span>
+</span><span class='line'>    <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="n">PACKET_SIZE</span><span class="p">];</span>      <span class="c1">// on-the-wire packet data</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Ring buffer containing ethernet packets.</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">ring</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">head</span><span class="p">;</span>           <span class="c1">// position of first unread packet</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tail</span><span class="p">;</span>           <span class="c1">// position of last unread packet</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">overflow_count</span><span class="p">;</span> <span class="c1">// number of packets dropped due to overflow</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">packet</span> <span class="n">packets</span><span class="p">[</span><span class="n">RING_SIZE</span><span class="p">];</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Ethernet device with two ring buffers for transmit and receive.</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">dev</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">magic</span><span class="p">;</span>          <span class="c1">// magic number identifying the structure</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">version</span><span class="p">;</span>        <span class="c1">// version of memory layout</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">ring</span> <span class="n">dev2host</span><span class="p">;</span>        <span class="c1">// ring of packets from host to device</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">ring</span> <span class="n">host2dev</span><span class="p">;</span>        <span class="c1">// ring of packets from device to host</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s a snippet using the data structure from C:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">bool</span> <span class="nf">is_empty</span><span class="p">(</span><span class="k">struct</span> <span class="n">ring</span> <span class="n">ring</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ring</span><span class="o">-&gt;</span><span class="n">head</span> <span class="o">==</span> <span class="n">ring</span><span class="o">-&gt;</span><span class="n">tail</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and here&#8217;s a snippet from LuaJIT:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="k">function</span> <span class="nf">is_full</span> <span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">return</span> <span class="n">ring</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="p">(</span><span class="n">ring</span><span class="p">.</span><span class="n">tail</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">C</span><span class="p">.</span><span class="n">RING_SIZE</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and with any luck I&#8217;ll find an excuse to see how it looks in a hardware description language like Verilog too.</p>
+
+<p>That&#8217;s all. I really appreciate shared memory. Hardware people use it all the time. It&#8217;s not the most high level communication protocol around, but it is simple and accessible, and can be fun for software people too. I think so, anyway :-)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/07/new-blog/">New Blog!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-07T03:56:00+02:00" pubdate data-updated="true">Jul 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>New blog! This time I&#8217;m taking Octopress for a spin. I really like the idea of markdown for text and static generation of content. Reminds me a bit of using <a href="http://www.latte.org/latte.html" title="Latte">Latte</a> in the old days. Latte became a dead-end when bitrot set in on the toolchain for generating pages. Let&#8217;s see how this goes.</p>
+
+<p>I&#8217;ve made a homepage <a href="http://lukego.com/">lukego.com</a> now to keep track of my comings and goings and my old blog was <a href="http://lukego.livejournal.com/">lukego.livejournal.com</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,9 +262,33 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/07/new-blog/">New blog!</a>
+      </li>
+    
   </ul>
 </section>
 
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("lukego", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a>
+  
+</section>
 
 
 
@@ -91,7 +300,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Your Name -
+  Copyright &copy; 2012 - Luke Gorrie -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

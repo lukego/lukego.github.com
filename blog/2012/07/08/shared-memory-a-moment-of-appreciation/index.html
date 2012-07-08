@@ -1,24 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Luke Gorrie's weblog]]></title>
-  <link href="http://lukego.github.com/atom.xml" rel="self"/>
-  <link href="http://lukego.github.com/"/>
-  <updated>2012-07-08T04:40:23+02:00</updated>
-  <id>http://lukego.github.com/</id>
-  <author>
-    <name><![CDATA[Luke Gorrie]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Shared memory: A moment of appreciation - Luke Gorrie's weblog</title>
+  <meta name="author" content="Luke Gorrie">
 
   
-  <entry>
-    <title type="html"><![CDATA[Shared memory: A moment of appreciation]]></title>
-    <link href="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/"/>
-    <updated>2012-07-08T03:46:00+02:00</updated>
-    <id>http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation</id>
-    <content type="html"><![CDATA[<p>Today I&#8217;m feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
+  <meta name="description" content="Today I&#8217;m feeling appreciative of shared memory. There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Luke Gorrie's weblog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33510863-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Luke Gorrie's weblog</a></h1>
+  
+    <h2>Cooking up some open-source networking</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:lukego.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Shared Memory: A Moment of Appreciation</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-08T03:46:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Today I&#8217;m feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
 
 <p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it&#8217;s the glue that holds our computers together.</p>
 
@@ -118,18 +202,131 @@
 <p>and with any luck I&#8217;ll find an excuse to see how it looks in a hardware description language like Verilog too.</p>
 
 <p>That&#8217;s all. I really appreciate shared memory. Hardware people use it all the time. It&#8217;s not the most high level communication protocol around, but it is simple and accessible, and can be fun for software people too. I think so, anyway :-)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[New blog!]]></title>
-    <link href="http://lukego.github.com/blog/2012/07/07/new-blog/"/>
-    <updated>2012-07-07T03:56:00+02:00</updated>
-    <id>http://lukego.github.com/blog/2012/07/07/new-blog</id>
-    <content type="html"><![CDATA[<p>New blog! This time I&#8217;m taking Octopress for a spin. I really like the idea of markdown for text and static generation of content. Reminds me a bit of using <a href="http://www.latte.org/latte.html" title="Latte">Latte</a> in the old days. Latte became a dead-end when bitrot set in on the toolchain for generating pages. Let&#8217;s see how this goes.</p>
+</div>
 
-<p>I&#8217;ve made a homepage <a href="http://lukego.com/">lukego.com</a> now to keep track of my comings and goings and my old blog was <a href="http://lukego.livejournal.com/">lukego.livejournal.com</a>.</p>
-]]></content>
-  </entry>
+
+  <footer>
+    <p class="meta">
+      
   
-</feed>
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-08T03:46:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/" data-via="lukego" data-counturl="http://lukego.github.com/blog/2012/07/08/shared-memory-a-moment-of-appreciation/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/07/new-blog/" title="Previous Post: New blog!">&laquo; New blog!</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/07/new-blog/">New blog!</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("lukego", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Luke Gorrie -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
