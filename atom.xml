@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's weblog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-07-11T05:31:44+02:00</updated>
+  <updated>2012-07-11T05:32:44+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -37,7 +37,7 @@
 
 <p>Intel&#8217;s <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It&#8217;s like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech!</p>
 
-<p>That&#8217;s all I wanted to say today :-)</p>
+<p>Give it a try! It&#8217;s really easy to install.</p>
 ]]></content>
   </entry>
   
