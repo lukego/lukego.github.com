@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hardware | Luke Gorrie's weblog]]></title>
+  <link href="http://blog.lukego.com//blog/categories/hardware/atom.xml" rel="self"/>
+  <link href="http://blog.lukego.com//"/>
+  <updated>2012-07-11T05:19:05+02:00</updated>
+  <id>http://blog.lukego.com//</id>
+  <author>
+    <name><![CDATA[Luke Gorrie]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Intel's Performance Counter Monitor]]></title>
+    <link href="http://blog.lukego.com//blog/2012/07/11/nehalem-i-slash-o-performance/"/>
+    <updated>2012-07-11T03:33:00+02:00</updated>
+    <id>http://blog.lukego.com//blog/2012/07/11/nehalem-i-slash-o-performance</id>
+    <content type="html"><![CDATA[<p>Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here's one idea.</p>
+
+<p>The Nehalem architecture looks like this:<br>
+<a href="http://www.qdpma.com/SystemArchitecture/SystemArchitecture_QPI.html">
+<img src="/images/Xeon5500_1IOH.png" alt="Nehalem Architecture" />
+</a></p>
+
+<p>So the main potential bottlenecks are:</p>
+
+<ol>
+<li>RAM<->CPU @ approx 256Gbps to each CPU's RAM bank. (Too many memory copies?)</li>
+<li>CPU<->CPU @ approx 200Gbps for sharing RAM over <a href="http://en.wikipedia.org/wiki/Intel_QuickPath_Interconnect">QPI</a>. (NUMA all mucked up?)</li>
+<li>PCIe @ approx 72Gbps. (Out of ports?)</li>
+<li>Storage disk/SSD. (Waiting all the time?)</li>
+</ol>
+
+
+<p>Intel's <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It's like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech!</p>
+
+<p>That's all I wanted to say today :-)</p>
+]]></content>
+  </entry>
+  
+</feed>

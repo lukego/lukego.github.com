@@ -9,7 +9,7 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Today I&#8217;m feeling appreciative of shared memory. There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful &hellip;">
+  <meta name="description" content="Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea. The Nehalem architecture looks like this: So &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -49,7 +49,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Luke Gorrie's weblog</a></h1>
   
-    <h2>Cooking up some open-source networking</h2>
+    <h2>Current mission - make networking quicker and easier</h2>
   
 </hgroup>
 
@@ -76,6 +76,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/11/nehalem-i-slash-o-performance/">Intel&#8217;s Performance Counter Monitor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-11T03:33:00+02:00" pubdate data-updated="true">Jul 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea.</p>
+
+<p>The Nehalem architecture looks like this:<br>
+<a href="http://www.qdpma.com/SystemArchitecture/SystemArchitecture_QPI.html">
+<img src="/images/Xeon5500_1IOH.png" alt="Nehalem Architecture" />
+</a></p>
+
+<p>So the main potential bottlenecks are:</p>
+
+<ol>
+<li>RAM<->CPU @ approx 256Gbps to each CPU&#8217;s RAM bank. (Too many memory copies?)</li>
+<li>CPU<->CPU @ approx 200Gbps for sharing RAM over <a href="http://en.wikipedia.org/wiki/Intel_QuickPath_Interconnect">QPI</a>. (NUMA all mucked up?)</li>
+<li>PCIe @ approx 72Gbps. (Out of ports?)</li>
+<li>Storage disk/SSD. (Waiting all the time?)</li>
+</ol>
+
+
+<p>Intel&#8217;s <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It&#8217;s like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech!</p>
+
+<p>That&#8217;s all I wanted to say today :-)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -261,6 +316,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/11/nehalem-i-slash-o-performance/">Intel&#8217;s Performance Counter Monitor</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a>

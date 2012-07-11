@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Luke Gorrie's weblog</title>
+  <title>Intel's Performance Counter Monitor - Luke Gorrie's weblog</title>
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Blog Archive 2012 Intel&#8217;s Performance Counter Monitor
-Jul 11 2012 posted in Hardware, Intel, Low-Level, Networking Shared memory: A moment of &hellip;">
+  <meta name="description" content="Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea. The Nehalem architecture looks like this: So &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ Jul 11 2012 posted in Hardware, Intel, Low-Level, Networking Shared memory: A mo
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.lukego.com//blog/archives/">
+  <link rel="canonical" href="http://blog.lukego.com//blog/2012/07/11/nehalem-i-slash-o-performance/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,59 +75,103 @@ Jul 11 2012 posted in Hardware, Intel, Low-Level, Networking Shared memory: A mo
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Intel's Performance Counter Monitor</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-11T03:33:00+02:00" pubdate data-updated="true">Jul 11<span>th</span>, 2012</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea.</p>
 
-  
-  <h2>2012</h2>
+<p>The Nehalem architecture looks like this:<br>
+<a href="http://www.qdpma.com/SystemArchitecture/SystemArchitecture_QPI.html">
+<img src="/images/Xeon5500_1IOH.png" alt="Nehalem Architecture" />
+</a></p>
 
-<article>
-  
-<h1><a href="/blog/2012/07/11/nehalem-i-slash-o-performance/">Intel&#8217;s Performance Counter Monitor</a></h1>
-<time datetime="2012-07-11T03:33:00+02:00" pubdate><span class='month'>Jul</span> <span class='day'>11</span> <span class='year'>2012</span></time>
+<p>So the main potential bottlenecks are:</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/hardware/'>Hardware</a>, <a class='category' href='/blog/categories/intel/'>Intel</a>, <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a></h1>
-<time datetime="2012-07-08T03:46:00+02:00" pubdate><span class='month'>Jul</span> <span class='day'>08</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
+<ol>
+<li>RAM<->CPU @ approx 256Gbps to each CPU&#8217;s RAM bank. (Too many memory copies?)</li>
+<li>CPU<->CPU @ approx 200Gbps for sharing RAM over <a href="http://en.wikipedia.org/wiki/Intel_QuickPath_Interconnect">QPI</a>. (NUMA all mucked up?)</li>
+<li>PCIe @ approx 72Gbps. (Out of ports?)</li>
+<li>Storage disk/SSD. (Waiting all the time?)</li>
+</ol>
 
 
-</article>
+<p>Intel&#8217;s <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It&#8217;s like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech!</p>
 
-
-
-<article>
-  
-<h1><a href="/blog/2012/07/07/new-blog/">New blog!</a></h1>
-<time datetime="2012-07-07T03:56:00+02:00" pubdate><span class='month'>Jul</span> <span class='day'>07</span> <span class='year'>2012</span></time>
-
-
-</article>
-
+<p>That&#8217;s all I wanted to say today :-)</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-11T03:33:00+02:00" pubdate data-updated="true">Jul 11<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hardware/'>Hardware</a>, <a class='category' href='/blog/categories/intel/'>Intel</a>, <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2012/07/11/nehalem-i-slash-o-performance/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2012/07/11/nehalem-i-slash-o-performance/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/" title="Previous Post: Shared memory: A moment of appreciation">&laquo; Shared memory: A moment of appreciation</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
