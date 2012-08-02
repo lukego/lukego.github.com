@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Intel | Luke Gorrie's weblog]]></title>
   <link href="http://blog.lukego.com//blog/categories/intel/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-08-02T18:40:15+02:00</updated>
+  <updated>2012-08-02T18:51:46+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -35,9 +35,13 @@
 </ol>
 
 
-<p>Intel's <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It's like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech!</p>
+<p>Intel's <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It's like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech.</p>
 
 <p>Give it a try! It's really easy to install.</p>
+
+<p>Here's how it looks:</p>
+
+<p><img src="/images/pcm.png" alt="Intel PCM Screenshot" /></p>
 ]]></content>
   </entry>
   
