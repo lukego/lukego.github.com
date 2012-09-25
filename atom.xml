@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's weblog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-09-25T11:33:43+02:00</updated>
+  <updated>2012-09-25T11:43:10+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -22,7 +22,7 @@
 
 <p>This post is a tribute to the <a href="http://emerginglangs.com">Emerging Languages conference</a> that I just missed. I&#8217;ve started a new project called <a href="http://www.github.com/SnabbCo/snabbswitch">Snabb Switch</a> and this is a braindump on how I&#8217;m choosing which programming language to use.</p>
 
-<p>The Snabb Switch project is a low-level networking stack with emphasis on hypervisors. The level of abstraction is basically the same as an OS kernel. I have a background of real programming in a bunch of languages: C, Erlang, Common Lisp, Scheme, Forth, Smalltalk, Emacs Lisp, Java, and the usual Unix suspects. I have the engineering philosophy of a firmware developer: I appreciate minimalism and I don&#8217;t want to depend on software that I&#8217;m not willing to understand and debug (less is more). I want to faithfully follow my own engineering values and simultaneously make the project accessible to other interested people.</p>
+<p>The Snabb Switch project is a low-level networking stack with emphasis on hypervisors. The #1 technical requirement is that you&#8217;re receiving a packet every microsecond or so and you have to do something clever with it and ship it back out quickly. I have a background of real programming in a bunch of languages: C, Erlang, Common Lisp, Scheme, Forth, Smalltalk, Emacs Lisp, Java, and the usual Unix suspects. I have the engineering philosophy of a firmware developer: I appreciate minimalism and I don&#8217;t want to depend on software that I&#8217;m not willing to understand and debug (less is more). I want to faithfully follow my own engineering values and simultaneously make the project accessible to other interested people.</p>
 
 <p>Here are the languages on my radar for this project and a raw dump of my thoughts on them:</p>
 
