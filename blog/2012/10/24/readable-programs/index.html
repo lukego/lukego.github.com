@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Readable programs - Luke Gorrie's weblog</title>
+  <meta name="author" content="Luke Gorrie">
+
+  
+  <meta name="description" content="Readable programs I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.lukego.com//blog/2012/10/24/readable-programs/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Luke Gorrie's weblog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33510863-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Luke Gorrie's weblog</a></h1>
+  
+    <h2>Current mission - make networking quicker and easier</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.lukego.com/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Readable Programs</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-24T17:33:00+02:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Readable programs</p>
+
+<p>I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love readable programs is that somebody has made the effort to make them readable, perhaps by the simple method of priting them out and running through them with a red pen, and this process has a simply magical effect on the clarity of the program.</p>
+
+<p>I believe that making programs readable is the best way to improve them.</p>
+
+<p>I gather that it used to be a common practice to print program listings and read them. I hear about it in anecdotes from programmers I admire, and I also see that many older programs appear to have been written with printing and readnig in mind: they contain pagebreak characters; they include their user-documentation in comments; and they are broken into logical sections of a couple of pages or so. The CMU AI Repository FTP server is an interesting source of 20-year-old programs like this.</p>
+
+<p>Let me share some quotations that have stuck in my memory:</p>
+
+<blockquote><p>The mask layout program by BillCroft at Purdue EE department - This
+is a truly awesome C program that could do VLSI scale designs on a
+PDP-11. The implementation included the command processing,
+high-resolution graphics, and custom database. Amazingly the program
+was only about half an inch thick and could be read in an afternoon.
+(Contrast this to my own companies&#8217; graphics drivers for the same
+device which ran ten times this for the drivers alone.)</p>
+
+<p><i>Ward Cunningham, Wiki</i></p>
+
+<p>I was the one who decided to rewrite the [program listing generator]
+from scratch as a standalone program, partly because I wanted to add
+substantial new facilities, such as the ability to list many files at
+once and provide inter-file cross-references.</p>
+
+<p><i>Guy Steele, ll1-discuss</i></p>
+
+<p>Programming is, among other things, a kind of writing. One way to
+learn writing is to write, but in all other forms of writing, one also
+reads. We read examples - both good and bad - to facilitate learning.
+But how many programmers learn to write programs by reading programs?
+A few, but not many. And with the advent of terminals, things are
+getting worse, for the programmer may not even see his own program in
+a form suitable for reading. In the old days &#8230; programmers would
+while away the time by reading each others&#8217; programs. Some even went
+so far as to read programs from the program library - which in those
+days was still a library in the old sense of the term.</p>
+
+<p><i>Gerald Weinberg, The Psychology of Computer Programming</i></p></blockquote>
+
+<p>How things used to be! People measured programs in &#8220;thickness&#8221;, wrote special listing generators (in 300 pages of PDP-10 assembler!), and dreaded that one day people may not sit down and read programs, not even their own. I know it&#8217;s easy to feel that with our fancy IDEs we&#8217;ve advanced beyond such archaic ideas, but I believe instead that reading whole programs is a Good Thing.</p>
+
+<p>I&#8217;ve done a few experiments with readable programs over the years. The first one was about 10 years ago, a program listing generator called pbook.el. pbook itself actually sucks - it&#8217;s way too much code and way too much commentary - but regtest.erl is one reasonable example use from my professional life. I wrote another listing generator called <code>elit.el</code> that was intended to mimic Steele&#8217;s style with RABBIT but this program sucked too for the same reasons. I&#8217;m not sure that listing generators are really needed, at least for short programs like bets.py. Early versions of SLIME were quietly pbook-formatted and I used to read them through without mentioning it to anybody.</p>
+
+<p>So why blog about this now?</p>
+
+<p>I&#8217;m working on a new project called Snabb Switch. I want the Snabb Switch code to be really good, so I&#8217;m very tempted to make it readable. I&#8217;m starting to think about what could be a practical tool for generating a program listing roughly the size of a small book, with chapters like &#8220;Intel NIC device driver&#8221;, &#8220;OpenFlow forwarding engine&#8221;, and so on.</p>
+
+<p>The idea I&#8217;m playing with at the moment is to have a &#8216;make&#8217; target to publish the Snabb Switch on leanpub. This way I can calmly read through my source code with a red pen on my train rides between Zurich and the Alps. I hope this will increased the quality of the source code overall and be well worth the effort independent of whether other people also want to write the program.</p>
+
+<p>I&#8217;ve at least made one pleasing discovery: thanks to the beauty of Markdown I&#8217;m now able to write a version of pbook that is down from 241 lines to a mere 43 characters: <code>sed -E -e 's/^/    /g' -e 's/^    --- ?//g'</code> (see my <a href="https://gist.github.com/3945964">Gist</a> for details).</p>
+
+<p>So that is my brain dump for today. Are you also interested in readable programs? Feel free to strike up a conversation with me on <code>luke@snabb.co</code>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-24T17:33:00+02:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/programming/'>Programming</a>, <a class='category' href='/blog/categories/snabb/'>Snabb</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2012/10/24/readable-programs/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2012/10/24/readable-programs/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/" title="Previous Post: Luke's Highly Opinionated Programming Language Roundup 2012">&laquo; Luke's Highly Opinionated Programming Language Roundup 2012</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/24/readable-programs/">Readable programs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/">Luke's Highly Opinionated Programming Language Roundup 2012</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/02/nehalem-i-slash-o-performance/">Intel's Performance Counter Monitor</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/07/new-blog/">New blog!</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("lukego", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Luke Gorrie -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
