@@ -9,7 +9,7 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Readable programs I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love &hellip;">
+  <meta name="description" content="I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love readable programs &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,13 +105,11 @@
   </header>
 
 
-  <div class="entry-content"><p>Readable programs</p>
+  <div class="entry-content"><p>I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love readable programs is that somebody has made the effort to make them readable, perhaps simply by priting them out and running through them with a red pen a few times, and I believe this simple process to have a magical effect on a program&#8217;s clarity.</p>
 
-<p>I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love readable programs is that somebody has made the effort to make them readable, perhaps by the simple method of priting them out and running through them with a red pen, and this process has a simply magical effect on the clarity of the program.</p>
+<p>I believe that making programs readable is one of the best and easiest ways to improve them.</p>
 
-<p>I believe that making programs readable is the best way to improve them.</p>
-
-<p>I gather that it used to be a common practice to print program listings and read them. I hear about it in anecdotes from programmers I admire, and I also see that many older programs appear to have been written with printing and readnig in mind: they contain pagebreak characters; they include their user-documentation in comments; and they are broken into logical sections of a couple of pages or so. The CMU AI Repository FTP server is an interesting source of 20-year-old programs like this.</p>
+<p>I gather that it used to be a common practice to print program listings and read them. I hear about it in anecdotes from programmers I respect, and I also see that many older programs appear to have been written with printing and readnig in mind: they contain pagebreak characters; they include their user-documentation in comments; and they are broken into logical sections of a couple of pages or so.</p>
 
 <p>Let me share some quotations that have stuck in my memory:</p>
 
@@ -121,18 +119,18 @@ PDP-11. The implementation included the command processing,
 high-resolution graphics, and custom database. Amazingly the program
 was only about half an inch thick and could be read in an afternoon.
 (Contrast this to my own companies&#8217; graphics drivers for the same
-device which ran ten times this for the drivers alone.)</p>
+device which ran ten times this for the drivers alone.)</p></blockquote>
 
-<p><i>Ward Cunningham, Wiki</i></p>
+<p>&#8211; <a href="http://c2.com/cgi/wiki?PleaseShowMeAlargeWellFactoredProgram">Ward Cunningham, WardsWiki</a></p>
 
-<p>I was the one who decided to rewrite the [program listing generator]
+<blockquote><p>I was the one who decided to rewrite the [program listing generator]
 from scratch as a standalone program, partly because I wanted to add
 substantial new facilities, such as the ability to list many files at
-once and provide inter-file cross-references.</p>
+once and provide inter-file cross-references.</p></blockquote>
 
-<p><i>Guy Steele, ll1-discuss</i></p>
+<p>&#8211; <a href="http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg02724.html">Guy Steele, ll1-discuss</a></p>
 
-<p>Programming is, among other things, a kind of writing. One way to
+<blockquote><p>Programming is, among other things, a kind of writing. One way to
 learn writing is to write, but in all other forms of writing, one also
 reads. We read examples - both good and bad - to facilitate learning.
 But how many programmers learn to write programs by reading programs?
@@ -141,21 +139,23 @@ getting worse, for the programmer may not even see his own program in
 a form suitable for reading. In the old days &#8230; programmers would
 while away the time by reading each others&#8217; programs. Some even went
 so far as to read programs from the program library - which in those
-days was still a library in the old sense of the term.</p>
+days was still a library in the old sense of the term.</p></blockquote>
 
-<p><i>Gerald Weinberg, The Psychology of Computer Programming</i></p></blockquote>
+<p>&#8211; <a href="http://www.amazon.com/The-Psychology-Computer-Programming-Anniversary/dp/0932633420">Gerald Weinberg, The Psychology of Computer Programming</a></p>
 
-<p>How things used to be! People measured programs in &#8220;thickness&#8221;, wrote special listing generators (in 300 pages of PDP-10 assembler!), and dreaded that one day people may not sit down and read programs, not even their own. I know it&#8217;s easy to feel that with our fancy IDEs we&#8217;ve advanced beyond such archaic ideas, but I believe instead that reading whole programs is a Good Thing.</p>
+<p>How different things used to be. People measured programs in &#8220;thickness&#8221;, wrote special listing generators (in <a href="http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg02718.html">300 pages of PDP-10 assembler</a> - quite an effort), and dreaded that one day people may not sit down and read programs, not even their own.</p>
 
-<p>I&#8217;ve done a few experiments with readable programs over the years. The first one was about 10 years ago, a program listing generator called pbook.el. pbook itself actually sucks - it&#8217;s way too much code and way too much commentary - but regtest.erl is one reasonable example use from my professional life. I wrote another listing generator called <code>elit.el</code> that was intended to mimic Steele&#8217;s style with RABBIT but this program sucked too for the same reasons. I&#8217;m not sure that listing generators are really needed, at least for short programs like bets.py. Early versions of SLIME were quietly pbook-formatted and I used to read them through without mentioning it to anybody.</p>
+<p>I know it&#8217;s easy to feel that with our fancy IDEs we&#8217;ve advanced beyond such archaic ideas, but I believe that reading whole programs is a Good Thing and worth holding on to.</p>
+
+<p>I&#8217;ve done a few experiments with readable programs over the years. The first one was about 10 years ago, a program listing generator called <a href="http://discontinuity.info/~pkhuong/pbookc.pdf">pbook.el</a>. pbook itself actually sucks - it&#8217;s way too much code and way too much commentary - but <a href="http://fresh.homeunix.net/~luke/misc/erlang/regtest.pdf">regtest.erl</a> is one reasonable example use from my professional life. I wrote another listing generator called <code>elit.el</code> that was intended to mimic Steele&#8217;s style with RABBIT but this program sucked too for the same reasons. I&#8217;m not sure that listing generators are really needed, at least for short programs like <a href="http://fresh.homeunix.net/~luke/misc/python/bets.py.txt">bets.py</a>. Early versions of <a href="http://en.wikipedia.org/wiki/SLIME">SLIME</a> were quietly pbook-formatted and I used to read them through without mentioning it to anybody.</p>
 
 <p>So why blog about this now?</p>
 
-<p>I&#8217;m working on a new project called Snabb Switch. I want the Snabb Switch code to be really good, so I&#8217;m very tempted to make it readable. I&#8217;m starting to think about what could be a practical tool for generating a program listing roughly the size of a small book, with chapters like &#8220;Intel NIC device driver&#8221;, &#8220;OpenFlow forwarding engine&#8221;, and so on.</p>
+<p>I&#8217;m working on a new project called <a href="http://www.github.com/SnabbCo/snabbswitch/">Snabb Switch</a>. I want the Snabb Switch code to be really good, so I&#8217;m very tempted to make it readable. I&#8217;m starting to think about what could be a practical tool for generating a program listing roughly the size of a small book, with chapters like &#8220;Intel NIC device driver&#8221;, &#8220;OpenFlow forwarding engine&#8221;, and so on.</p>
 
-<p>The idea I&#8217;m playing with at the moment is to have a &#8216;make&#8217; target to publish the Snabb Switch on leanpub. This way I can calmly read through my source code with a red pen on my train rides between Zurich and the Alps. I hope this will increased the quality of the source code overall and be well worth the effort independent of whether other people also want to write the program.</p>
+<p>The idea I&#8217;m playing with at the moment is to have a &#8216;make&#8217; target to publish the Snabb Switch on <a href="http://www.leanpub.com/">Leanpub</a>. This way I can calmly read through my source code with a red pen on my train rides between Zurich and the Alps. I expect that this would increase the quality of my source code overall and be well worth the effort, quite independent of whether other people decide to read the program too.</p>
 
-<p>I&#8217;ve at least made one pleasing discovery: thanks to the beauty of Markdown I&#8217;m now able to write a version of pbook that is down from 241 lines to a mere 43 characters: <code>sed -E -e 's/^/    /g' -e 's/^    --- ?//g'</code> (see my <a href="https://gist.github.com/3945964">Gist</a> for details).</p>
+<p>I&#8217;ve at least made one pleasing discovery: thanks to the beauty of Markdown I&#8217;m now able to write a version of pbook that is down from 241 lines to a mere 43 characters: <code>sed -E -e 's/^/    /g' -e 's/^    --- ?//g'</code>. (See my <a href="https://gist.github.com/3945964">Gist</a> for a few more details.)</p>
 
 <p>So that is my brain dump for today. Are you also interested in readable programs? Feel free to strike up a conversation with me on <code>luke@snabb.co</code>.</p>
 </div>
