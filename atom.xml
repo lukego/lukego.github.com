@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-10-28T13:26:44+01:00</updated>
+  <updated>2012-10-28T13:30:13+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -31,7 +31,7 @@ parts of the spectrum.</p>
 </ol>
 
 
-<p>My favorite piece of firmware is <a href="http://www.openfirmware.info/Open_Firmware">Openfirmware</a>. This is shipped on a 1MB ROM chip in the <a href="http://en.wikipedia.org/wiki/OLPC_XO-1">OLPC XO</a> instead of a traditional BIOS. It&#8217;s a complete and self-sufficient software environment that has been carefully crafted over the past few decades by super-hacker <a href="http://howsoftwareisbuilt.com/2008/03/27/interview-with-mitch-bradley-firmware-olpc/">Mitch Bradley</a>. If you have an OLPC XO and would like to learn about firmware then I can recommend studying Mitch Bradley&#8217;s <a href="http://wiki.laptop.org/go/Forth_Lessons">Forth Lessons</a>.</p>
+<p>My favorite piece of firmware is <a href="http://www.openfirmware.info/Open_Firmware">Openfirmware</a>. This is shipped on a 1MB ROM chip in the <a href="http://en.wikipedia.org/wiki/OLPC_XO-1">OLPC XO</a> instead of a traditional BIOS. It&#8217;s a complete and self-sufficient software environment that has been carefully crafted over the past few decades by super-hacker <a href="http://howsoftwareisbuilt.com/2008/03/27/interview-with-mitch-bradley-firmware-olpc/">Mitch Bradley</a>. If you have an OLPC XO and would like to learn about firmware then I can recommend studying Mitch&#8217;s <a href="http://wiki.laptop.org/go/Forth_Lessons">Forth Lessons</a>.</p>
 
 <p>These days we can choose to deploy our applications as firmware, software, and increasingly as full-scale OS distributions &#8211; kilobytes, megabytes, or gigabytes. There is often one style that&#8217;s clearly the best, and other times several options are all reasonable choices.</p>
 
