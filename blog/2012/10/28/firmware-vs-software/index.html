@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Hardware - Luke Gorrie's blog</title>
+  <title>Firmware vs. Software - Luke Gorrie's blog</title>
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Category: Hardware">
+  <meta name="description" content="Firmware is great stuff. It&#8217;s the same as software and at the same
+time it&#8217;s different. It&#8217;s a bit like visible and ultraviolet &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.lukego.com/blog/categories/hardware/">
+  <link rel="canonical" href="http://blog.lukego.com//blog/2012/10/28/firmware-vs-software/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,35 +76,95 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Hardware</h1>
+    
+      <h1 class="entry-title">Firmware vs. Software</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-28T13:01:00+01:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Firmware is great stuff. It&#8217;s the same as software and at the same
+time it&#8217;s different. It&#8217;s a bit like visible and ultraviolet light:
+they are fundamentally the same &#8220;stuff&#8221; but they are on different
+parts of the spectrum.</p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/08/02/nehalem-i-slash-o-performance/">Intel's Performance Counter Monitor</a></h1>
-<time datetime="2012-08-02T17:33:00+02:00" pubdate><span class='month'>Aug</span> <span class='day'>02</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/hardware/'>Hardware</a>, <a class='category' href='/blog/categories/intel/'>Intel</a>, <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
+<ol>
+<li>Firmware compiles to a self-contained image. The build process creates this one file and it has no external dependencies. There is a specific piece of hardware that can execute the image file.</li>
+<li>Firmware has known space targets. They are usually measured in kilobytes. You always keep an eye on how much of your image size and RAM budgets are used up.</li>
+<li>Firmware is intimate with hardware. You don&#8217;t use libraries and frameworks, you control microchips. Your documentation is hardware data sheets and errata lists. Your job is to understand the hardware completely and make it sing.</li>
+<li>Firmware is self-reliant. You take responsibility for every byte you ship in your image. That means being prepared to study and learn to debug any code that you choose to reuse. You always keep an eye on the total transitive complexity of the code you depend on.</li>
+</ol>
 
 
-</article>
+<p>My favorite piece of firmware is <a href="http://www.openfirmware.info/Open_Firmware">Openfirmware</a>. This is shipped on a 1MB ROM chip in the <a href="http://en.wikipedia.org/wiki/OLPC_XO-1">OLPC XO</a> instead of a traditional BIOS. It&#8217;s a complete and self-sufficient software environment that has been carefully crafted over the past few decades by super-hacker <a href="http://howsoftwareisbuilt.com/2008/03/27/interview-with-mitch-bradley-firmware-olpc/">Mitch Bradley</a>. If you have an OLPC XO and would like to learn about firmware then I can recommend studying Mitch Bradley&#8217;s <a href="http://wiki.laptop.org/go/Forth_Lessons">Forth Lessons</a>.</p>
 
+<p>These days we can choose to deploy our applications as firmware, software, and increasingly as full-scale OS distributions &#8211; kilobytes, megabytes, or gigabytes. There is often one style that&#8217;s clearly the best, and other times several options are all reasonable choices.</p>
+
+<p>Firmware is fun and refreshing to write. I have chosen to develop my new <a href="http://www.github.com/SnabbCo/snabbswitch/">Snabb Switch</a> project as firmware. I will post a lot more about the implications of this decision over time.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-28T13:01:00+01:00" pubdate data-updated="true">Oct 28<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2012/10/28/firmware-vs-software/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2012/10/28/firmware-vs-software/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/24/readable-programs/" title="Previous Post: Readable programs">&laquo; Readable programs</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
