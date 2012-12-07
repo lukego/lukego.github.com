@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-10-28T13:59:03+01:00</updated>
+  <updated>2012-12-08T00:23:43+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tech Mesh 2012 Trip Report]]></title>
+    <link href="http://blog.lukego.com//blog/2012/12/08/tech-mesh-2012-trip-report/"/>
+    <updated>2012-12-08T00:15:00+01:00</updated>
+    <id>http://blog.lukego.com//blog/2012/12/08/tech-mesh-2012-trip-report</id>
+    <content type="html"><![CDATA[<p>I had a great time at the <a href="http://techmeshconf.com/techmesh-london-2012/">Tech Mesh</a> conference in London this week. Hearty thanks to everybody who made it happen. These are my impressions.</p>
+
+<p>Stuart Bailey&#8217;s talk was heartwarming. He&#8217;s an Erlang guy who&#8217;s finally meeting other Erlang people in the flesh. &#8220;Honey, you wouldn&#8217;t believe it, I can talk about Erlang here and they don&#8217;t look at me like I&#8217;m crazy.&#8221; I think it&#8217;s a beautiful moment that many of us can relate to.</p>
+
+<p>Amazingly, Lisp code was on screens all over the place with no fuss being made whatsoever. This was all Clojure. Rich Hickey was there. I&#8217;d heard him speak once before, five years ago at the Lisp 50th anniversary event at OOPSLA, where everybody looked to him as the great hope to give Lisp a fresh start. Looks to me like he has delivered on what he promised. Great work Rich! That is no small feat.</p>
+
+<p>I met a lot of friendly and interesting people. Haskell hackers, Xen hackers, even another Queenslander like me. I found the boyish enthusiasm of Simon Peyton Jones and Joe Armstrong very infectious, as always. I was also really glad to meet up with a lot of my old friends from the Stockholm Erlang scene.</p>
+
+<p>The language runtime panel reminded me of one idea that&#8217;s been rattling around in my head forever. Take it as given that (a) the Erlang VM is great for concurrency because it gives you efficient process isolation and (b) hardware advances are making the Linux kernel&#8217;s process isolation more efficient every year. So when will it be time to start using the Linux kernel as an Erlang-like language runtime environment? If you strip away all the layers of crud on top, are we already there? This seems like valid research question.</p>
+
+<p>I like the overall conference theme of helping to introduce niche ideas to a wider group of people. I am a bit outside the target demographic myself. Tech Mesh is full of ideas with ten thousand devotees trying to spread themselves to the next million. I am more comfortable with the smaller memes myself, when everybody thinks you are mad and you have to work hard to convince the first ten or hundred people that you&#8217;re not. That is why I am working on high-performance networking firmware in userspace with LuaJIT device drivers. I suppose everybody has their own ideal proximity to mainstream thinking and that every technology is a moving target in that respect.</p>
+
+<p>The organization was great. Plentiful food, coffee, and other beverages. A bit chilly but hey, this is England. The venue was right near the British Museum so I finally saw the Rosetta Stone for the first time. Thanks everybody!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Firmware vs. Software]]></title>

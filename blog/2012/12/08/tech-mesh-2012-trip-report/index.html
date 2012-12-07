@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Intel's Performance Counter Monitor - Luke Gorrie's blog</title>
+  <title>Tech Mesh 2012 Trip Report - Luke Gorrie's blog</title>
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea. The Nehalem architecture looks like this: So &hellip;">
+  <meta name="description" content="I had a great time at the Tech Mesh conference in London this week. Hearty thanks to everybody who made it happen. These are my impressions. Stuart &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.lukego.com//blog/2012/08/02/nehalem-i-slash-o-performance/">
+  <link rel="canonical" href="http://blog.lukego.com//blog/2012/12/08/tech-mesh-2012-trip-report/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">Intel's Performance Counter Monitor</h1>
+      <h1 class="entry-title">Tech Mesh 2012 Trip Report</h1>
     
     
       <p class="meta">
@@ -95,67 +95,26 @@
   
 
 
-<time datetime="2012-08-02T17:33:00+02:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
+<time datetime="2012-12-08T00:15:00+01:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea.</p>
+<div class="entry-content"><p>I had a great time at the <a href="http://techmeshconf.com/techmesh-london-2012/">Tech Mesh</a> conference in London this week. Hearty thanks to everybody who made it happen. These are my impressions.</p>
 
-<p>The Nehalem architecture looks like this:<br>
-<a href="http://www.qdpma.com/SystemArchitecture/SystemArchitecture_QPI.html">
-<img src="/images/Xeon5500_1IOH.png" alt="Nehalem Architecture" />
-</a></p>
+<p>Stuart Bailey&#8217;s talk was heartwarming. He&#8217;s an Erlang guy who&#8217;s finally meeting other Erlang people in the flesh. &#8220;Honey, you wouldn&#8217;t believe it, I can talk about Erlang here and they don&#8217;t look at me like I&#8217;m crazy.&#8221; I think it&#8217;s a beautiful moment that many of us can relate to.</p>
 
-<p>So the main potential bottlenecks are:</p>
+<p>Amazingly, Lisp code was on screens all over the place with no fuss being made whatsoever. This was all Clojure. Rich Hickey was there. I&#8217;d heard him speak once before, five years ago at the Lisp 50th anniversary event at OOPSLA, where everybody looked to him as the great hope to give Lisp a fresh start. Looks to me like he has delivered on what he promised. Great work Rich! That is no small feat.</p>
 
-<ol>
-<li>RAM<->CPU @ approx 256Gbps to each CPU&#8217;s RAM bank. (Too many memory copies?)</li>
-<li>CPU<->CPU @ approx 200Gbps for sharing RAM over <a href="http://en.wikipedia.org/wiki/Intel_QuickPath_Interconnect">QPI</a>. (NUMA all mucked up?)</li>
-<li>PCIe @ approx 72Gbps. (Out of ports? Crappy motherboard?)</li>
-<li>Storage disk/SSD. (Waiting all the time?)</li>
-</ol>
+<p>I met a lot of friendly and interesting people. Haskell hackers, Xen hackers, even another Queenslander like me. I found the boyish enthusiasm of Simon Peyton Jones and Joe Armstrong very infectious, as always. I was also really glad to meet up with a lot of my old friends from the Stockholm Erlang scene.</p>
 
+<p>The language runtime panel reminded me of one idea that&#8217;s been rattling around in my head forever. Take it as given that (a) the Erlang VM is great for concurrency because it gives you efficient process isolation and (b) hardware advances are making the Linux kernel&#8217;s process isolation more efficient every year. So when will it be time to start using the Linux kernel as an Erlang-like language runtime environment? If you strip away all the layers of crud on top, are we already there? This seems like valid research question.</p>
 
-<p>Intel&#8217;s <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It&#8217;s like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech.</p>
+<p>I like the overall conference theme of helping to introduce niche ideas to a wider group of people. I am a bit outside the target demographic myself. Tech Mesh is full of ideas with ten thousand devotees trying to spread themselves to the next million. I am more comfortable with the smaller memes myself, when everybody thinks you are mad and you have to work hard to convince the first ten or hundred people that you&#8217;re not. That is why I am working on high-performance networking firmware in userspace with LuaJIT device drivers. I suppose everybody has their own ideal proximity to mainstream thinking and that every technology is a moving target in that respect.</p>
 
-<p>Give it a try! It&#8217;s really easy to install.</p>
-
-<p>Here&#8217;s how it looks:</p>
-
-<pre>
- EXEC  : instructions per nominal CPU cycle
- IPC   : instructions per CPU cycle
- FREQ  : relation to nominal CPU frequency='unhalted clock ticks'/'invariant timer ticks' (includes Intel Turbo Boost)
- AFREQ : relation to nominal CPU frequency while in active state (not in power-saving C state)='unhalted clock ticks'/'invariant timer ticks while in C0-state'  (includes Intel Turbo Boost)
- L3MISS: L3 cache misses 
- L2MISS: L2 cache misses (including other core's L2 cache *hits*) 
- L3HIT : L3 cache hit ratio (0.00-1.00)
- L2HIT : L2 cache hit ratio (0.00-1.00)
- L3CLK : ratio of CPU cycles lost due to L3 cache misses (0.00-1.00), in some cases could be >1.0 due to a higher memory latency
- L2CLK : ratio of CPU cycles lost due to missing L2 cache but still hitting L3 cache (0.00-1.00)
- READ  : bytes read from memory controller (in GBytes)
- WRITE : bytes written to memory controller (in GBytes)
-
-
- Core (SKT) | EXEC | IPC  | FREQ  | AFREQ | L3MISS | L2MISS | L3HIT | L2HIT | L3CLK | L2CLK  | READ  | WRITE 
-
-   0    0     0.59   0.60   0.98    1.00    1743 K   3978 K    0.56    0.62    0.15    0.07     N/A     N/A
-   1    0     0.61   0.62   0.97    1.00    2595 K   3356 K    0.23    0.64    0.23    0.02     N/A     N/A
-   2    0     0.49   0.59   0.83    1.00    2205 K   3198 K    0.31    0.60    0.22    0.03     N/A     N/A
-   3    0     0.06   0.32   0.18    1.00     715 K    921 K    0.22    0.35    0.34    0.02     N/A     N/A
-------------------------------------------------------------------------------------------------------------
- TOTAL  *     0.43   0.59   0.74    1.00    7259 K     11 M    0.37    0.61    0.21    0.04    6.51    2.85
-
- Instructions retired: 3707 M ; Active cycles: 6317 M ; Time (TSC): 2134 Mticks ; C0 (active,non-halted) core residency: 73.99 %
-
- PHYSICAL CORE IPC                 : 0.59 => corresponds to 14.67 % utilization for cores in active state
- Instructions per nominal CPU cycle: 0.43 => corresponds to 10.86 % core utilization over time interval
-----------------------------------------------------------------------------------------------
-</pre>
-
+<p>The organization was great. Plentiful food, coffee, and other beverages. A bit chilly but hey, this is England. The venue was right near the British Museum so I finally saw the Rosetta Stone for the first time. Thanks everybody!</p>
 </div>
 
 
@@ -178,21 +137,15 @@
   
 
 
-<time datetime="2012-08-02T17:33:00+02:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
+<time datetime="2012-12-08T00:15:00+01:00" pubdate data-updated="true">Dec 8<span>th</span>, 2012</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/hardware/'>Hardware</a>, <a class='category' href='/blog/categories/intel/'>Intel</a>, <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2012/08/02/nehalem-i-slash-o-performance/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2012/08/02/nehalem-i-slash-o-performance/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2012/12/08/tech-mesh-2012-trip-report/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2012/12/08/tech-mesh-2012-trip-report/" >Tweet</a>
   
   
   
@@ -201,10 +154,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/" title="Previous Post: Shared memory: A moment of appreciation">&laquo; Shared memory: A moment of appreciation</a>
+        <a class="basic-alignment left" href="/blog/2012/10/28/firmware-vs-software/" title="Previous Post: Firmware vs. Software">&laquo; Firmware vs. Software</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/" title="Next Post: Luke's Highly Opinionated Programming Language Roundup 2012">Luke's Highly Opinionated Programming Language Roundup 2012 &raquo;</a>
       
     </p>
   </footer>
