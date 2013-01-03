@@ -166,7 +166,7 @@ operating system calls here are to sleep and check the time.</p>
 <p>There were two simple but important steps in my optimization work:</p>
 
 <ul>
-<li>Use <code>luajit -jdump</code> to avoid doing un-JIT&#8217;able things in the main loop.</li>
+<li>Use <code>luajit -jdump</code> to root out un-JIT&#8217;able code in the main loop.</li>
 <li>Create <code>flush_tx</code> to send all descriptors to hardware at once instead of one-at-a-time.</li>
 </ul>
 
@@ -179,7 +179,7 @@ programming language, and how neatly any parts that are ultimately
 written in C can be integrated into the whole. This is an open source
 project and you are welcome to join in the fun too!</p>
 
-<p>(Comments welcome on the Snabb Switch Reddit.)</p>
+<p>(Comments welcome <a href="http://www.reddit.com/r/snabb/comments/15vqp0/snabb_switchs_luajit_ethernet_device_driver_luke/">on the Snabb Switch Reddit</a>.)</p>
 </div>
   
   
