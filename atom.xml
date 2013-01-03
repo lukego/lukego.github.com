@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2012-12-08T00:23:43+01:00</updated>
+  <updated>2013-01-03T10:20:21+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Snabb Switch's LuaJIT Ethernet device driver]]></title>
+    <link href="http://blog.lukego.com//blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/"/>
+    <updated>2013-01-03T09:57:00+01:00</updated>
+    <id>http://blog.lukego.com//blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver</id>
+    <content type="html"><![CDATA[<p>I am having fun while writing the <a href="http://www.snabb.co/snabbswitch/">Snabb Switch</a> Ethernet device driver.
+This is like Intel&#8217;s standard <a href="http://sourceforge.net/projects/e1000/">E1000/IGB/IGBE driver for Linux</a> except that:</p>
+
+<ul>
+<li>It is written in <a href="http://www.luajit.org/">LuaJIT</a>. (It&#8217;s my first LuaJIT program, I&#8217;m a newbie.)</li>
+<li>It runs in a normal Linux userspace process but talks directly to hardware.</li>
+<li>It is tailor made for one application, a simple hypervisor-friendly ethernet switch.</li>
+</ul>
+
+
+<p>I have been optimizing the LuaJIT selftest code to transmit ethernet
+packets in a loop. I am pretty encouraged by the performance that I
+see: 3.1% CPU utilization on a low-end <a href="http://www.hetzner.de/en/hosting/produkte_rootserver/ex6">Hetzner
+EX6</a> machine
+to saturate a 1Gbps ethernet port with tiny packets. That is 28
+nanoseconds of CPU time per packet.</p>
+
+<p>I hope the details will be interesting. It is not so often that people
+write about low-level networking in high-level dynamic programming
+languages, is it? So, to give a quick taste, the driver source code is
+in
+<a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel.lua">intel.lua</a>
+and the selftest main loop works like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="kd">local</span> <span class="n">deadline</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">get_time_ns</span><span class="p">()</span> <span class="o">+</span> <span class="mi">10000000000</span><span class="n">LL</span>
+</span><span class='line'><span class="k">repeat</span>
+</span><span class='line'>   <span class="k">while</span> <span class="n">tx_load</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.75</span> <span class="k">do</span> <span class="n">C</span><span class="p">.</span><span class="n">usleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span> <span class="k">end</span>
+</span><span class='line'>   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tx_available</span><span class="p">()</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">add_txbuf</span><span class="p">(</span><span class="n">dma_phys</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">end</span>
+</span><span class='line'>   <span class="n">flush_tx</span><span class="p">()</span>
+</span><span class='line'><span class="k">until</span> <span class="n">C</span><span class="p">.</span><span class="n">get_time_ns</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">deadline</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and here is what that means:</p>
+
+<ul>
+<li>Sleep while the hardware transmit queue is at least 75% full (<code>tx_load</code>).</li>
+<li>Fill up the transmit queue with 60-byte packets (<code>add_txbuf</code>).</li>
+<li>Tell the NIC hardware to process the transmit queue (<code>flush_tx</code>).</li>
+<li>Stop after 10 seconds have elapsed (<code>get_time_ns</code>).</li>
+</ul>
+
+
+<p>This is all accomplished by directly controlling the NIC using
+memory-mapped register I/O and DMA with shared memory. The only
+operating system calls here are to sleep and check the time.</p>
+
+<p>There were two simple but important steps in my optimization work:</p>
+
+<ul>
+<li>Use <code>luajit -jdump</code> to avoid doing un-JIT&#8217;able things in the main loop.</li>
+<li>Create <code>flush_tx</code> to send all descriptors to hardware at once instead of one-at-a-time.</li>
+</ul>
+
+
+<p>This is a really fun sort of programming to be doing!</p>
+
+<p>Going forward I am really excited to see how much of a production
+quality Ethernet switch can be written in a high-level dynamic
+programming language, and how neatly any parts that are ultimately
+written in C can be integrated into the whole. This is an open source
+project and you are welcome to join in the fun too!</p>
+
+<p>(Comments welcome on the Snabb Switch Reddit.)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tech Mesh 2012 Trip Report]]></title>

@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Snabb Switch's LuaJIT Ethernet device driver - Luke Gorrie's blog</title>
+  <meta name="author" content="Luke Gorrie">
+
+  
+  <meta name="description" content="I am having fun while writing the Snabb Switch Ethernet device driver.
+This is like Intel&#8217;s standard E1000/IGB/IGBE driver for Linux except &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.lukego.com//blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Luke Gorrie's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33510863-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Luke Gorrie's blog</a></h1>
+  
+    <h2>Current mission: Frontal attack on x86 data center networking</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.lukego.com/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Snabb Switch's LuaJIT Ethernet Device Driver</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-03T09:57:00+01:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I am having fun while writing the <a href="http://www.snabb.co/snabbswitch/">Snabb Switch</a> Ethernet device driver.
+This is like Intel&#8217;s standard <a href="http://sourceforge.net/projects/e1000/">E1000/IGB/IGBE driver for Linux</a> except that:</p>
+
+<ul>
+<li>It is written in <a href="http://www.luajit.org/">LuaJIT</a>. (It&#8217;s my first LuaJIT program, I&#8217;m a newbie.)</li>
+<li>It runs in a normal Linux userspace process but talks directly to hardware.</li>
+<li>It is tailor made for one application, a simple hypervisor-friendly ethernet switch.</li>
+</ul>
+
+
+<p>I have been optimizing the LuaJIT selftest code to transmit ethernet
+packets in a loop. I am pretty encouraged by the performance that I
+see: 3.1% CPU utilization on a low-end <a href="http://www.hetzner.de/en/hosting/produkte_rootserver/ex6">Hetzner
+EX6</a> machine
+to saturate a 1Gbps ethernet port with tiny packets. That is 28
+nanoseconds of CPU time per packet.</p>
+
+<p>I hope the details will be interesting. It is not so often that people
+write about low-level networking in high-level dynamic programming
+languages, is it? So, to give a quick taste, the driver source code is
+in
+<a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel.lua">intel.lua</a>
+and the selftest main loop works like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="kd">local</span> <span class="n">deadline</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">get_time_ns</span><span class="p">()</span> <span class="o">+</span> <span class="mi">10000000000</span><span class="n">LL</span>
+</span><span class='line'><span class="k">repeat</span>
+</span><span class='line'>   <span class="k">while</span> <span class="n">tx_load</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.75</span> <span class="k">do</span> <span class="n">C</span><span class="p">.</span><span class="n">usleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span> <span class="k">end</span>
+</span><span class='line'>   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tx_available</span><span class="p">()</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">add_txbuf</span><span class="p">(</span><span class="n">dma_phys</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">end</span>
+</span><span class='line'>   <span class="n">flush_tx</span><span class="p">()</span>
+</span><span class='line'><span class="k">until</span> <span class="n">C</span><span class="p">.</span><span class="n">get_time_ns</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">deadline</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and here is what that means:</p>
+
+<ul>
+<li>Sleep while the hardware transmit queue is at least 75% full (<code>tx_load</code>).</li>
+<li>Fill up the transmit queue with 60-byte packets (<code>add_txbuf</code>).</li>
+<li>Tell the NIC hardware to process the transmit queue (<code>flush_tx</code>).</li>
+<li>Stop after 10 seconds have elapsed (<code>get_time_ns</code>).</li>
+</ul>
+
+
+<p>This is all accomplished by directly controlling the NIC using
+memory-mapped register I/O and DMA with shared memory. The only
+operating system calls here are to sleep and check the time.</p>
+
+<p>There were two simple but important steps in my optimization work:</p>
+
+<ul>
+<li>Use <code>luajit -jdump</code> to avoid doing un-JIT&#8217;able things in the main loop.</li>
+<li>Create <code>flush_tx</code> to send all descriptors to hardware at once instead of one-at-a-time.</li>
+</ul>
+
+
+<p>This is a really fun sort of programming to be doing!</p>
+
+<p>Going forward I am really excited to see how much of a production
+quality Ethernet switch can be written in a high-level dynamic
+programming language, and how neatly any parts that are ultimately
+written in C can be integrated into the whole. This is an open source
+project and you are welcome to join in the fun too!</p>
+
+<p>(Comments welcome on the Snabb Switch Reddit.)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-03T09:57:00+01:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/08/tech-mesh-2012-trip-report/" title="Previous Post: Tech Mesh 2012 Trip Report">&laquo; Tech Mesh 2012 Trip Report</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Check me out!</h1>
+  <p>
+    Personal: <a href="http://www.lukego.com/">My homepage</a><br/>
+    Hacking: <a href="http://www.github.com/SnabbCo/snabbswitch">Snabb Switch</a><br/>
+    Professional: <a href="http://www.snabb.co/">Snabb</a>
+    <a href="http://www.snabb.co/"><img src="http://www.snabb.co/Tiger_snabb_128.png" alt="Snabb logo"/></a>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">Snabb Switch's LuaJIT Ethernet device driver</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/08/tech-mesh-2012-trip-report/">Tech Mesh 2012 Trip Report</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/28/firmware-vs-software/">Firmware vs. Software</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/24/readable-programs/">Readable programs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/">Luke's Highly Opinionated Programming Language Roundup 2012</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("lukego", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Luke Gorrie -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
