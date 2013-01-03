@@ -163,14 +163,6 @@ and the selftest main loop works like this:</p>
 memory-mapped register I/O and DMA with shared memory. The only
 operating system calls here are to sleep and check the time.</p>
 
-<p>There were two simple but important steps in my optimization work:</p>
-
-<ul>
-<li>Use <code>luajit -jdump</code> to root out un-JIT&#8217;able code in the main loop.</li>
-<li>Create <code>flush_tx</code> to send all descriptors to hardware at once instead of one-at-a-time.</li>
-</ul>
-
-
 <p>This is a really fun sort of programming to be doing!</p>
 
 <p>Going forward I am really excited to see how much of a production

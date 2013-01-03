@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-03T10:25:20+01:00</updated>
+  <updated>2013-01-03T10:35:27+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -74,14 +74,6 @@ and the selftest main loop works like this:</p>
 <p>This is all accomplished by directly controlling the NIC using
 memory-mapped register I/O and DMA with shared memory. The only
 operating system calls here are to sleep and check the time.</p>
-
-<p>There were two simple but important steps in my optimization work:</p>
-
-<ul>
-<li>Use <code>luajit -jdump</code> to root out un-JIT&#8217;able code in the main loop.</li>
-<li>Create <code>flush_tx</code> to send all descriptors to hardware at once instead of one-at-a-time.</li>
-</ul>
-
 
 <p>This is a really fun sort of programming to be doing!</p>
 
