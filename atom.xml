@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-04T14:52:56+01:00</updated>
+  <updated>2013-01-04T14:54:38+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -43,7 +43,7 @@ interesting to consider choices that they make.</p>
 <ul>
 <li>Customized kernel device driver. netmap and DNA both fork standard
 Intel drivers with extensions to map I/O memory into userspace.</li>
-<li>Custom hardware. Myricom and Napatech both distribute bespoke device drivers for their own custom hardware.</li>
+<li>Custom hardware. Myricom and Napatech both distribute bespoke device drivers for their own custom hardware (ASIC for Myricom and FPGA for Napatech).</li>
 <li>Userspace library. These solutions each provide unique libraries to access their extensions. The scope varies tremendously: ethernet I/O, libpcap compatibility, hardware-assisted traffic dispatching for multiprocessing, buffer memory management, all the way up to entire TCP/IP socket layers.</li>
 <li>Licensing. netmap is open-source, DNA requires a modest license for its user-space library, Napatech requires an NDA and depends on very expensive hardware.</li>
 </ul>
