@@ -5,13 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Luke Gorrie's blog</title>
+  <title>Kernel-bypass networking - Luke Gorrie's blog</title>
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Blog Archive 2013 Kernel-bypass networking
-Jan 04 2013 Snabb Switch&#8217;s LuaJIT Ethernet device driver
-Jan 03 2013 2012 Tech Mesh 2012 Trip &hellip;">
+  <meta name="description" content="Kernel-bypass networking is gaining popularity. This means moving
+control of Ethernet hardware directly into user-space processes to
+avoid the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@ Jan 03 2013 2012 Tech Mesh 2012 Trip &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.lukego.com//blog/archives/">
+  <link rel="canonical" href="http://blog.lukego.com//blog/2013/01/04/kernel-bypass-networking/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,126 +77,112 @@ Jan 03 2013 2012 Tech Mesh 2012 Trip &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Kernel-bypass Networking</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T14:13:00+01:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>Kernel-bypass networking is gaining popularity. This means moving
+control of Ethernet hardware directly into user-space processes to
+avoid the overhead of communicating with the operating system
+kernel. This gives user-space all of the raw performance traditionally
+enjoyed by the kernel &#8211; and all of the responsibility too.</p>
 
-  
-  <h2>2013</h2>
+<p>Here is a selection of the many kernel-bypass solutions that are available:</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass networking</a></h1>
-<time datetime="2013-01-04T14:13:00+01:00" pubdate><span class='month'>Jan</span> <span class='day'>04</span> <span class='year'>2013</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">Snabb Switch&#8217;s LuaJIT Ethernet device driver</a></h1>
-<time datetime="2013-01-03T09:57:00+01:00" pubdate><span class='month'>Jan</span> <span class='day'>03</span> <span class='year'>2013</span></time>
-
-
-</article>
+<ul>
+<li><a href="http://www.ntop.org/products/pf_ring/dna/">ntop.org DNA</a>.</li>
+<li><a href="http://info.iet.unipi.it/~luigi/netmap/">netmap</a>.</li>
+<li><a href="http://www.intel.com/p/en_US/embedded/hwsw/technology/packet-processing">Intel DPDK</a>.</li>
+<li>Myricom <a href="https://www.myricom.com/software/sniffer10g.html">Sniffer10G</a> and <a href="https://www.myricom.com/software/dbl.html">DBL</a>.</li>
+<li><a href="http://www.6wind.com/6windgate-software">6WINDGate</a>.</li>
+<li>SolarFlare <a href="http://www.openonload.org">OpenOnload</a>.</li>
+<li><a href="http://www.napatech.com/products/network_adapters.html">Napatech</a>.</li>
+</ul>
 
 
+<p>These products each take their own design approaches and it&#8217;s
+interesting to consider choices that they make.</p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/12/08/tech-mesh-2012-trip-report/">Tech Mesh 2012 Trip Report</a></h1>
-<time datetime="2012-12-08T00:15:00+01:00" pubdate><span class='month'>Dec</span> <span class='day'>08</span> <span class='year'>2012</span></time>
-
-
-</article>
-
+<ul>
+<li>Customized kernel device driver. netmap and DNA both fork standard
+Intel drivers with extensions to map I/O memory into userspace.</li>
+<li>Custom hardware. Myricom and Napatech both distribute bespoke device drivers for their own custom hardware.</li>
+<li>Userspace library. These solutions each provide unique libraries to access their extensions. The scope varies tremendously: ethernet I/O, libpcap compatibility, hardware-assisted traffic dispatching for multiprocessing, buffer memory management, all the way up to entire TCP/IP socket layers.</li>
+<li>Licensing. netmap is open-source, DNA requires a modest license for its user-space library, Napatech requires an NDA and depends on very expensive hardware.</li>
+</ul>
 
 
-<article>
-  
-<h1><a href="/blog/2012/10/28/firmware-vs-software/">Firmware vs. Software</a></h1>
-<time datetime="2012-10-28T13:01:00+01:00" pubdate><span class='month'>Oct</span> <span class='day'>28</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/10/24/readable-programs/">Readable programs</a></h1>
-<time datetime="2012-10-24T17:33:00+02:00" pubdate><span class='month'>Oct</span> <span class='day'>24</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/programming/'>Programming</a>, <a class='category' href='/blog/categories/snabb/'>Snabb</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/">Luke&#8217;s Highly Opinionated Programming Language Roundup 2012</a></h1>
-<time datetime="2012-09-25T11:26:00+02:00" pubdate><span class='month'>Sep</span> <span class='day'>25</span> <span class='year'>2012</span></time>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/08/02/nehalem-i-slash-o-performance/">Intel&#8217;s Performance Counter Monitor</a></h1>
-<time datetime="2012-08-02T17:33:00+02:00" pubdate><span class='month'>Aug</span> <span class='day'>02</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/hardware/'>Hardware</a>, <a class='category' href='/blog/categories/intel/'>Intel</a>, <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared memory: A moment of appreciation</a></h1>
-<time datetime="2012-07-08T03:46:00+02:00" pubdate><span class='month'>Jul</span> <span class='day'>08</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/low-level/'>Low-Level</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2012/07/07/new-blog/">New blog!</a></h1>
-<time datetime="2012-07-07T03:56:00+02:00" pubdate><span class='month'>Jul</span> <span class='day'>07</span> <span class='year'>2012</span></time>
-
-
-</article>
-
+<p>If you are developing high-speed (10+ Gbps) networking applications
+then you should seriously consider using one of these solutions. If
+you are an expert on one of these solutions then please tell us about
+it on the Snabb Switch Reddit!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T14:13:00+01:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2013/01/04/kernel-bypass-networking/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2013/01/04/kernel-bypass-networking/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/" title="Previous Post: Snabb Switch's LuaJIT Ethernet device driver">&laquo; Snabb Switch's LuaJIT Ethernet device driver</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

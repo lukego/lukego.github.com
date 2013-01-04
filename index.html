@@ -9,8 +9,9 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="I am having fun while writing the Snabb Switch Ethernet device driver.
-This is like Intel&#8217;s standard E1000/IGB/IGBE driver for Linux except &hellip;">
+  <meta name="description" content="Kernel-bypass networking is gaining popularity. This means moving
+control of Ethernet hardware directly into user-space processes to
+avoid the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +78,76 @@ This is like Intel&#8217;s standard E1000/IGB/IGBE driver for Linux except &hell
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass Networking</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T14:13:00+01:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Kernel-bypass networking is gaining popularity. This means moving
+control of Ethernet hardware directly into user-space processes to
+avoid the overhead of communicating with the operating system
+kernel. This gives user-space all of the raw performance traditionally
+enjoyed by the kernel &#8211; and all of the responsibility too.</p>
+
+<p>Here is a selection of the many kernel-bypass solutions that are available:</p>
+
+<ul>
+<li><a href="http://www.ntop.org/products/pf_ring/dna/">ntop.org DNA</a>.</li>
+<li><a href="http://info.iet.unipi.it/~luigi/netmap/">netmap</a>.</li>
+<li><a href="http://www.intel.com/p/en_US/embedded/hwsw/technology/packet-processing">Intel DPDK</a>.</li>
+<li>Myricom <a href="https://www.myricom.com/software/sniffer10g.html">Sniffer10G</a> and <a href="https://www.myricom.com/software/dbl.html">DBL</a>.</li>
+<li><a href="http://www.6wind.com/6windgate-software">6WINDGate</a>.</li>
+<li>SolarFlare <a href="http://www.openonload.org">OpenOnload</a>.</li>
+<li><a href="http://www.napatech.com/products/network_adapters.html">Napatech</a>.</li>
+</ul>
+
+
+<p>These products each take their own design approaches and it&#8217;s
+interesting to consider choices that they make.</p>
+
+<ul>
+<li>Customized kernel device driver. netmap and DNA both fork standard
+Intel drivers with extensions to map I/O memory into userspace.</li>
+<li>Custom hardware. Myricom and Napatech both distribute bespoke device drivers for their own custom hardware.</li>
+<li>Userspace library. These solutions each provide unique libraries to access their extensions. The scope varies tremendously: ethernet I/O, libpcap compatibility, hardware-assisted traffic dispatching for multiprocessing, buffer memory management, all the way up to entire TCP/IP socket layers.</li>
+<li>Licensing. netmap is open-source, DNA requires a modest license for its user-space library, Napatech requires an NDA and depends on very expensive hardware.</li>
+</ul>
+
+
+<p>If you are developing high-speed (10+ Gbps) networking applications
+then you should seriously consider using one of these solutions. If
+you are an expert on one of these solutions then please tell us about
+it on the Snabb Switch Reddit!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -714,6 +785,10 @@ days was still a library in the old sense of the term.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass networking</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">Snabb Switch&#8217;s LuaJIT Ethernet device driver</a>
       </li>
     
@@ -727,10 +802,6 @@ days was still a library in the old sense of the term.</p></blockquote>
     
       <li class="post">
         <a href="/blog/2012/10/24/readable-programs/">Readable programs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/">Luke&#8217;s Highly Opinionated Programming Language Roundup 2012</a>
       </li>
     
   </ul>
