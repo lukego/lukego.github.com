@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-04T14:54:38+01:00</updated>
+  <updated>2013-01-04T14:57:25+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -19,9 +19,9 @@
     <updated>2013-01-04T14:13:00+01:00</updated>
     <id>http://blog.lukego.com//blog/2013/01/04/kernel-bypass-networking</id>
     <content type="html"><![CDATA[<p>Kernel-bypass networking is gaining popularity. This means moving
-control of Ethernet hardware directly into user-space processes to
+control of Ethernet hardware directly into userspace processes to
 avoid the overhead of communicating with the operating system
-kernel. This gives user-space all of the raw performance traditionally
+kernel. This gives userspace all of the raw performance traditionally
 enjoyed by the kernel &#8211; and all of the responsibility too. This is important for certain specialized applications that can gain as much as <a href="http://info.iet.unipi.it/~luigi/papers/20120503-netmap-atc12.pdf">20x more performance</a>.</p>
 
 <p>Here is a selection of the many kernel-bypass solutions that are available:</p>
@@ -44,8 +44,8 @@ interesting to consider choices that they make.</p>
 <li>Customized kernel device driver. netmap and DNA both fork standard
 Intel drivers with extensions to map I/O memory into userspace.</li>
 <li>Custom hardware. Myricom and Napatech both distribute bespoke device drivers for their own custom hardware (ASIC for Myricom and FPGA for Napatech).</li>
-<li>Userspace library. These solutions each provide unique libraries to access their extensions. The scope varies tremendously: ethernet I/O, libpcap compatibility, hardware-assisted traffic dispatching for multiprocessing, buffer memory management, all the way up to entire TCP/IP socket layers.</li>
-<li>Licensing. netmap is open-source, DNA requires a modest license for its user-space library, Napatech requires an NDA and depends on very expensive hardware.</li>
+<li>Userspace library. These solutions each provide unique libraries to access their extensions. The scope varies tremendously: Ethernet I/O, libpcap compatibility, hardware-assisted traffic dispatching for multiprocessing, buffer memory management, all the way up to entire TCP/IP socket layers.</li>
+<li>Licensing. netmap is open-source, DNA requires a modest license for its userspace library, Napatech requires an NDA and depends on very expensive hardware.</li>
 </ul>
 
 
