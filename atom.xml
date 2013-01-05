@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-05T15:33:45+01:00</updated>
+  <updated>2013-01-05T15:35:13+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -37,6 +37,8 @@
 <p>This design suits Snabb Switch very well. In the future I foresee support for more Intel NICs, more advanced NIC features, more operating systems, and more hardware families. This will be a fun challenge over the months and years ahead.</p>
 
 <p>Self-reliance FTW!</p>
+
+<p>(<a href="http://www.reddit.com/r/snabb/comments/160awa/snabb_switchs_kernelbypass_networking_luke/">Comment on Snabb Switch Reddit</a>)</p>
 ]]></content>
   </entry>
   
