@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-04T14:57:25+01:00</updated>
+  <updated>2013-01-05T15:33:45+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Snabb Switch's kernel-bypass networking]]></title>
+    <link href="http://blog.lukego.com//blog/2013/01/05/kernel-bypass-networking-in-snabb-switch/"/>
+    <updated>2013-01-05T15:16:00+01:00</updated>
+    <id>http://blog.lukego.com//blog/2013/01/05/kernel-bypass-networking-in-snabb-switch</id>
+    <content type="html"><![CDATA[<p>Snabb Switch has built-in <a href="http://blog.lukego.com/blog/2013/01/04/kernel-bypass-networking/">kernel-bypass networking</a> support. The switch is <a href="http://blog.lukego.com/blog/2012/10/28/firmware-vs-software/">engineered as firmware</a> and that means regarding hardware specifications on equal footing with software APIs when designing subsystems. My personal conclusion for this project is that hardware network interfaces from Intel compare favourably with software interfaces from third-party API developers.</p>
+
+<p>Here is what makes the Snabb Switch kernel-bypass networking implementation unique:</p>
+
+<ul>
+<li>It&#8217;s special-purpose: exactly the features that benefit the application.</li>
+<li>It&#8217;s written 100% from scratch, including the base ethernet device driver.</li>
+<li>It&#8217;s small: about 1 KLOC of <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel.lua">source code</a>; about 20KB of object code.</li>
+<li>It&#8217;s <a href="http://blog.lukego.com/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">fast</a>: tens of millions of packets per second.</li>
+<li>It supports Intel hardware: great quality in all shapes and sizes.</li>
+<li>It runs on any modern Linux kernel. No kernel module or device driver needed.</li>
+<li>It&#8217;s portable to other platforms: Give it access to hardware (physical RAM, raw PCI) and it takes care of everything else.</li>
+<li>It&#8217;s independent. No forks to maintain, no upstreams to feed, no license fees to pay.</li>
+</ul>
+
+
+<p>This design suits Snabb Switch very well. In the future I foresee support for more Intel NICs, more advanced NIC features, more operating systems, and more hardware families. This will be a fun challenge over the months and years ahead.</p>
+
+<p>Self-reliance FTW!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kernel-bypass networking]]></title>
