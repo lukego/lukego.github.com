@@ -214,8 +214,8 @@
 </span><span class='line'>  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">gethash</span> <span class="vg">*new*</span> <span class="nv">k</span><span class="p">)</span> <span class="p">(</span><span class="nv">insert</span> <span class="nv">k</span> <span class="p">(</span><span class="nb">gethash</span> <span class="vg">*old*</span> <span class="nv">k</span><span class="p">))))</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">age</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">rotatef</span> <span class="nv">old</span> <span class="nv">new</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">clrhash</span> <span class="nv">new</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">rotatef</span> <span class="vg">*old*</span> <span class="vg">*new*</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">clrhash</span> <span class="vg">*new*</span><span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

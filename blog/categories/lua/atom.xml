@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Lua | Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//blog/categories/lua/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-02-04T16:15:56+01:00</updated>
+  <updated>2013-02-04T16:24:01+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -91,8 +91,8 @@ function age()        old, new = new, {}                 end
   (or (gethash <em>new</em> k) (insert k (gethash <em>old</em> k))))</p>
 
 <p>(defun age ()
-  (rotatef old new)
-  (clrhash new))
+  (rotatef <em>old</em> <em>new</em>)
+  (clrhash <em>new</em>))
 ```</p>
 
 <p>and I found it interesting that the Lua version is so much more compact than the Lisp version. Sure, I've compacted it with whitespace tweakery and so on, but each version is an concise as I feel comfortable making it. So I wonder if Lua is becoming my preferred vehicle for writing pseudo-pseudo-code and indulging in cutenesses?</p>
