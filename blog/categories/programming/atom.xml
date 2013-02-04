@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming | Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//blog/categories/programming/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-05T15:37:46+01:00</updated>
+  <updated>2013-02-04T16:10:52+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,120 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cute code]]></title>
+    <link href="http://blog.lukego.com//blog/2013/02/04/cute-code/"/>
+    <updated>2013-02-04T15:46:00+01:00</updated>
+    <id>http://blog.lukego.com//blog/2013/02/04/cute-code</id>
+    <content type="html"><![CDATA[<p>Today was one of those pleasant days when I know it's not the time for serious programming.</p>
+
+<p>I had a lovely twitter conversation with Dimitri Fontaine, Tony Finch, and Jan Lehnardt. I started out wanting to recommend a data structure to <a href="https://github.com/rahul-mr">@rahul-mr</a> for easily garbage collecting <a href="http://snabb.co/snabbswitch/">Snabb Switch</a>'s ethernet forwarding table. Trouble is, I don't know the name of the data structure, so I posted this implementation in <a href="https://gist.github.com/4706097">a gist</a> and asked if anybody knows what it's called. Here's the code:</p>
+
+<p>```lua
+-- Table structure that "garbage collects" not-recently-used items in O(1) time.</p>
+
+<p>-- Three operations are supported:
+--   insert(k,v): add a new value
+--   lookup(k): lookup an existing value
+--   age(): delete old entries (that have not been used since previous call to age())</p>
+
+<p>-- Initialize 'old' and 'new' to empty tables
+local old, new = {}, {}</p>
+
+<p>function insert(k, v)
+  new[k] = v
+end</p>
+
+<p>function lookup(k)
+  if new[k] then</p>
+
+<pre><code>-- Found in new table
+return new[k]
+</code></pre>
+
+<p>  elseif old[k] then</p>
+
+<pre><code>-- Migrate from old table to new table
+new[k] = old[k]
+return old[k]
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>-- Not found
+return nil
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>function age()
+  -- Entries in 'old' are dropped, entries in 'new' become old.
+  old = new
+  new = {} -- empty table
+end
+```</p>
+
+<p>And the twitterverse helped me rewrite this much more concisely:</p>
+
+<p><code>lua
+local old, new = {}, {}
+function insert(k, v) new[k] = v; return v               end
+function lookup(k)    return new[k] or insert(k, old[k]) end
+function age()        old, new = new, {}                 end
+</code></p>
+
+<p>which I find rather aesthetically satisfying.</p>
+
+<p>Rewriting code more concisely is one of my favorite activities. Lisp is my usual tool of choice for this purpose, so I tried a translation just for fun:</p>
+
+<p>```common-lisp
+(defvar <em>new</em> (make-hash-table))
+(defvar <em>old</em> (make-hash-table))</p>
+
+<p>(defun insert (k v)
+  (when v (setf (gethash <em>new</em> k) v)))</p>
+
+<p>(defun lookup (k v)
+  (or (gethash <em>new</em> k) (insert k (gethash <em>old</em> k))))</p>
+
+<p>(defun age ()
+  (rotatef old new)
+  (clrhash new))
+```</p>
+
+<p>and I found it interesting that the Lua version is so much more compact than the Lisp version. Sure, I've compacted it with whitespace tweakery and so on, but each version is an concise as I feel comfortable making it. So I wonder if Lua is becoming my preferred vehicle for writing pseudo-pseudo-code and indulging in cutenesses?</p>
+
+<p>Then having <em>cuteness</em> cross my mind I couldn't help but think back to cute code I've worked on before. I wrote my own favorite bit of cute production code in the OLPC firmware <a href="http://tracker.coreboot.org/trac/openfirmware/browser/dev/hdaudio/core.fth">HD Audio driver</a>. You see, the firmware is allowed to hard-code knowledge of the physical design of the laptop and motherboard. This bit of firmware code tells the audio chip explicit details such as the size and color of each physical audio jack in the laptop. The operating system can later query the chip for this information and present it to a user, for example in an audio mixer application.</p>
+
+<p><code>text
+porta  config(  1/8" green left hp-out jack     )config
+porta  config(  1/8" green left hp-out jack     )config
+portb  config(  1/8" pink left mic-in jack      )config
+portc  config(  builtin internal top mic-in no-detect other-analog )config
+portd  config(  unused line-out no-detect       )config
+porte  config(  unused line-out no-detect       )config
+portf  config(  unused line-out no-detect       )config
+portg  config(  builtin internal front speaker no-detect other-analog )config
+porth  config(  unused line-out no-detect       )config
+porti  config(  unused line-out no-detect       )config
+portj  config(  unused line-out no-detect       )config
+portk  config(  unused line-out no-detect       )config
+</code></p>
+
+<p>The code reads a bit like english - <em>1/8" pink left mic-in jack</em> - but is actually purely imperative Forth code that was inspired by the wonderful book <a href="http://thinking-forth.sourceforge.net">Thinking Forth</a>.</p>
+
+<p>So it goes!</p>
+
+<p>P.S. I never did work out the canonical name of the data structure. Please drop me an email on <code>luke@snabb.co</code> if you know.</p>
+
+<p><a href="https://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a></p>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Readable programs]]></title>

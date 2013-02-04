@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-01-05T15:37:46+01:00</updated>
+  <updated>2013-02-04T16:10:52+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,172 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cute code]]></title>
+    <link href="http://blog.lukego.com//blog/2013/02/04/cute-code/"/>
+    <updated>2013-02-04T15:46:00+01:00</updated>
+    <id>http://blog.lukego.com//blog/2013/02/04/cute-code</id>
+    <content type="html"><![CDATA[<p>Today was one of those pleasant days when I know it&#8217;s not the time for serious programming.</p>
+
+<p>I had a lovely twitter conversation with Dimitri Fontaine, Tony Finch, and Jan Lehnardt. I started out wanting to recommend a data structure to <a href="https://github.com/rahul-mr">@rahul-mr</a> for easily garbage collecting <a href="http://snabb.co/snabbswitch/">Snabb Switch</a>&#8217;s ethernet forwarding table. Trouble is, I don&#8217;t know the name of the data structure, so I posted this implementation in <a href="https://gist.github.com/4706097">a gist</a> and asked if anybody knows what it&#8217;s called. Here&#8217;s the code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="c1">-- Table structure that &quot;garbage collects&quot; not-recently-used items in O(1) time.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- Three operations are supported:</span>
+</span><span class='line'><span class="c1">--   insert(k,v): add a new value</span>
+</span><span class='line'><span class="c1">--   lookup(k): lookup an existing value</span>
+</span><span class='line'><span class="c1">--   age(): delete old entries (that have not been used since previous call to age())</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- Initialize &#39;old&#39; and &#39;new&#39; to empty tables</span>
+</span><span class='line'><span class="kd">local</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">insert</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">then</span>
+</span><span class='line'>    <span class="c1">-- Found in new table</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span class='line'>  <span class="k">elseif</span> <span class="n">old</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">then</span>
+</span><span class='line'>    <span class="c1">-- Migrate from old table to new table</span>
+</span><span class='line'>    <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">old</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">old</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="c1">-- Not found</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">nil</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function</span> <span class="nf">age</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">-- Entries in &#39;old&#39; are dropped, entries in &#39;new&#39; become old.</span>
+</span><span class='line'>  <span class="n">old</span> <span class="o">=</span> <span class="n">new</span>
+</span><span class='line'>  <span class="n">new</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">-- empty table</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the twitterverse helped me rewrite this much more concisely:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="kd">local</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">insert</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="k">return</span> <span class="n">v</span>               <span class="k">end</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>    <span class="k">return</span> <span class="n">new</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">or</span> <span class="n">insert</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">old</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">end</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">age</span><span class="p">()</span>        <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="o">=</span> <span class="n">new</span><span class="p">,</span> <span class="p">{}</span>                 <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which I find rather aesthetically satisfying.</p>
+
+<p>Rewriting code more concisely is one of my favorite activities. Lisp is my usual tool of choice for this purpose, so I tried a translation just for fun:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='common-lisp'><span class='line'><span class="p">(</span><span class="nb">defvar</span> <span class="vg">*new*</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defvar</span> <span class="vg">*old*</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">insert</span> <span class="p">(</span><span class="nv">k</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">when</span> <span class="nv">v</span> <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="vg">*new*</span> <span class="nv">k</span><span class="p">)</span> <span class="nv">v</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">lookup</span> <span class="p">(</span><span class="nv">k</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">gethash</span> <span class="vg">*new*</span> <span class="nv">k</span><span class="p">)</span> <span class="p">(</span><span class="nv">insert</span> <span class="nv">k</span> <span class="p">(</span><span class="nb">gethash</span> <span class="vg">*old*</span> <span class="nv">k</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">age</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">rotatef</span> <span class="nv">old</span> <span class="nv">new</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">clrhash</span> <span class="nv">new</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and I found it interesting that the Lua version is so much more compact than the Lisp version. Sure, I&#8217;ve compacted it with whitespace tweakery and so on, but each version is an concise as I feel comfortable making it. So I wonder if Lua is becoming my preferred vehicle for writing pseudo-pseudo-code and indulging in cutenesses?</p>
+
+<p>Then having <em>cuteness</em> cross my mind I couldn&#8217;t help but think back to cute code I&#8217;ve worked on before. I wrote my own favorite bit of cute production code in the OLPC firmware <a href="http://tracker.coreboot.org/trac/openfirmware/browser/dev/hdaudio/core.fth">HD Audio driver</a>. You see, the firmware is allowed to hard-code knowledge of the physical design of the laptop and motherboard. This bit of firmware code tells the audio chip explicit details such as the size and color of each physical audio jack in the laptop. The operating system can later query the chip for this information and present it to a user, for example in an audio mixer application.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>porta  config(  1/8&quot; green left hp-out jack     )config
+</span><span class='line'>porta  config(  1/8&quot; green left hp-out jack     )config
+</span><span class='line'>portb  config(  1/8&quot; pink left mic-in jack      )config
+</span><span class='line'>portc  config(  builtin internal top mic-in no-detect other-analog )config
+</span><span class='line'>portd  config(  unused line-out no-detect       )config
+</span><span class='line'>porte  config(  unused line-out no-detect       )config
+</span><span class='line'>portf  config(  unused line-out no-detect       )config
+</span><span class='line'>portg  config(  builtin internal front speaker no-detect other-analog )config
+</span><span class='line'>porth  config(  unused line-out no-detect       )config
+</span><span class='line'>porti  config(  unused line-out no-detect       )config
+</span><span class='line'>portj  config(  unused line-out no-detect       )config
+</span><span class='line'>portk  config(  unused line-out no-detect       )config
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code reads a bit like english - <em>1/8&#8221; pink left mic-in jack</em> - but is actually purely imperative Forth code that was inspired by the wonderful book <a href="http://thinking-forth.sourceforge.net">Thinking Forth</a>.</p>
+
+<p>So it goes!</p>
+
+<p>P.S. I never did work out the canonical name of the data structure. Please drop me an email on <code>luke@snabb.co</code> if you know.</p>
+
+<p><a href="https://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a></p>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Snabb Switch's kernel-bypass networking]]></title>
