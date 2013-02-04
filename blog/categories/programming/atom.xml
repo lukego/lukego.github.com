@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming | Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//blog/categories/programming/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-02-04T16:25:47+01:00</updated>
+  <updated>2013-02-04T16:26:26+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -97,7 +97,7 @@ function age()        old, new = new, {}                 end
 
 <p>and I found it interesting that the Lua version is so much more compact than the Lisp version. Sure, I've compacted it with whitespace tweakery and so on, but each version is as concise as I feel comfortable making it. So I wonder if Lua is becoming my preferred vehicle for writing pseudo-pseudo-code and indulging in cutenesses?</p>
 
-<p>Then having <em>cuteness</em> cross my mind I couldn't help but think back to cute code I've worked on before. I wrote my own favorite bit of cute production code in the OLPC firmware <a href="http://tracker.coreboot.org/trac/openfirmware/browser/dev/hdaudio/core.fth">HD Audio driver</a>. You see, the firmware is allowed to hard-code knowledge of the physical design of the laptop and motherboard. This bit of firmware code tells the audio chip explicit details such as the size and color of each physical audio jack in the laptop. The operating system can later query the chip for this information and present it to a user, for example in an audio mixer application.</p>
+<p>Then having <em>cuteness</em> cross my mind I couldn't help but think back to cute code I've worked on before. I wrote my own favorite bit of cute production code in the OLPC firmware <a href="http://tracker.coreboot.org/trac/openfirmware/browser/dev/hdaudio/core.fth">HD Audio driver</a>. You see, the firmware is allowed to hard-code knowledge of the physical design of the laptop and motherboard. This bit of firmware code tells the audio chip explicit details such as the size and color of each physical audio jack in the laptop. The chip can later provide this information to the operating system for presentation to a user, for example in an audio mixer application.</p>
 
 <p><code>text
 porta  config(  1/8" green left hp-out jack     )config
