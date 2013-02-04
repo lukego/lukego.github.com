@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Lua | Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//blog/categories/lua/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-02-04T16:10:52+01:00</updated>
+  <updated>2013-02-04T16:15:56+01:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -20,7 +20,7 @@
     <id>http://blog.lukego.com//blog/2013/02/04/cute-code</id>
     <content type="html"><![CDATA[<p>Today was one of those pleasant days when I know it's not the time for serious programming.</p>
 
-<p>I had a lovely twitter conversation with Dimitri Fontaine, Tony Finch, and Jan Lehnardt. I started out wanting to recommend a data structure to <a href="https://github.com/rahul-mr">@rahul-mr</a> for easily garbage collecting <a href="http://snabb.co/snabbswitch/">Snabb Switch</a>'s ethernet forwarding table. Trouble is, I don't know the name of the data structure, so I posted this implementation in <a href="https://gist.github.com/4706097">a gist</a> and asked if anybody knows what it's called. Here's the code:</p>
+<p>I had a lovely twitter conversation with <a href="http://twitter.com/tapoueh">Dimitri Fontaine</a>, <a href="http://twitter.com/fanf">Tony Finch</a>, and <a href="http://twitter.com/janl">Jan Lehnardt</a>. I started out wanting to recommend a data structure to <a href="https://github.com/rahul-mr">@rahul-mr</a> for easily garbage collecting <a href="http://snabb.co/snabbswitch/">Snabb Switch</a>'s ethernet forwarding table. Trouble is, I don't know the name of the data structure, so I posted this implementation in <a href="https://gist.github.com/4706097">a gist</a> and asked if anybody knows what it's called. Here's the code:</p>
 
 <p>```lua
 -- Table structure that "garbage collects" not-recently-used items in O(1) time.</p>
