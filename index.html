@@ -9,7 +9,7 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Today was one of those pleasant days when I know it&#8217;s not the time for serious programming. I had a lovely twitter conversation with Dimitri &hellip;">
+  <meta name="description" content="I love my little company, Snabb. It is my laboratory. My lab makes me productive in society. I write really cool open source code for anybody to use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/03/snabb-my-lab/">Snabb - My Lab</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-03T14:42:00+02:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I love my little company, <a href="http://snabb.co/">Snabb</a>. It is <a href="http://sivers.org/laboratory">my laboratory</a>.</p>
+
+<p>My lab makes me productive in society. I write really cool open source code for anybody to use, and I earn money by traveling around <strong>meeting interesting people</strong> and helping them to solve important problems. I have &#8220;hard fun&#8221; looking for ways to do these things in harmony.</p>
+
+<p>My lab is where I can <strong>be creative</strong>. I can ask myself, after 25 years of thoughtful programming, <em>what&#8217;s the right way to do fast ethernet I/O?</em> and then develop my answer: a small <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel10g.lua">10G Ethernet device driver</a> written in LuaJIT and embedded in the application. Fun!</p>
+
+<p>My lab lets me <strong>work with friendly people</strong> in the open source world. I get to take part in the conversation on how to write networking software, and I can collaborate on equal footing with other clever hackers who have their own interests and labs, big and small.</p>
+
+<p>My lab lets me <strong>buy fun toys</strong> (without asking permission :-)). Any day now I will receive a <a href="https://groups.google.com/forum/?fromgroups=#!topic/snabb-devel/vUd2DZZ-ctw">server with twenty 10G ethernet ports</a> to share with everybody hacking on the <a href="http://snabb.co/snabbswitch/">Snabb Switch</a> project. We get to break new ground together in the spirit of creative fun.</p>
+
+<p>My lab lets me create software of <strong>enduring value</strong>. I do not have to constrain my code with secrecy and license restrictions, which means that it can take on a life of its own. The software can follow its own strong tendency to spread and thrive. I have just given a talk about SLIME at the first Emacs conference &#8211; 10-year-old work on a 37-year-old editor is still in widespread use!</p>
+
+<p>My lab lets me <strong>choose</strong> to do all of these things, all by myself, and it would let me choose to do something completely different if that was what I wanted. It lets me decide when to work from my house in the Swiss Alps, a beach in Thailand, my family&#8217;s home in Australia, a cosy cafe in a big city, or a friendly office. It makes me abundantly wealthy in freedom and independence.</p>
+
+<p>In summary I feel that I am close to a local maximum for <strong>creativity and freedom</strong>.</p>
+
+<p>The problem has never been to &#8220;make&#8221; the company a success, but rather to <strong>preserve</strong> the great situation that I already had from the first day. On the one hand I need to avoid things like running out of money, selling shares, and signing employment contracts, and on the other hand I need to keep writing cool open source software and finding people with important problems I can help with. This way I can keep on being <a href="http://us1.campaign-archive2.com/?u=ebf088d153799238adff7f681&amp;id=5e842b4e52">proud</a> of my company.</p>
+
+<blockquote>
+A man is a success if he wakes up in the morning and goes to bed at night and in between does what he wants to do.- Bob Dylan
+</blockquote>
+
+
+<p>Know what I mean? I would be happy to <strong>hear from you</strong> on luke@snabb.co.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -837,141 +896,6 @@ days was still a library in the old sense of the term.</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/08/shared-memory-a-moment-of-appreciation/">Shared Memory: A Moment of Appreciation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-08T03:46:00+02:00" pubdate data-updated="true">Jul 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I&#8217;m feeling appreciative of <a href="http://en.wikipedia.org/wiki/Shared_memory">shared memory</a>.</p>
-
-<p>There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful services, JSON-RPC, AMQP, and plenty more besides. Some mechanisms survive, a lot influence new successors, and quite a lot of them just fall out of fashion and turn to dust. Shared memory is one with a timeless quality. Year after year it&#8217;s the glue that holds our computers together.</p>
-
-<p>Shared memory is a simple mechanism. Many different programs are concurrently accessing the physical RAM chips in the ocmputer. The programs are written in completely different programming languages, they are executing on different microchips, and some of them are implemented as hardware rather than software. The programs all share a common abstraction: LOAD and STORE operations towards a big array of machine words. The rest is a matter of conventions, design patterns, and data structures. That&#8217;s all we need!</p>
-
-<p>I really enjoy the versatility. How sweet it is to be able to drive hardware memory controller so directly.</p>
-
-<h3>Playing around</h3>
-
-<p>Just for fun, here&#8217;s a shared memory interface I&#8217;m playing with for ethernet networking. That is: to use shared memory to send and receive packets between a &#8220;host&#8221; and a &#8220;device&#8221;. The host and device can be written in any programming language, or indeed in hardware, and this is roughly how hardware packet I/O interfaces really look.</p>
-
-<p>Here&#8217;s an example memory layout. I sketched it using C syntax and defined a packet <a href="http://en.wikipedia.org/wiki/Circular_buffer">ring buffer</a> for transmision in each direction.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">enum</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">RING_SIZE</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">PACKET_SIZE</span> <span class="o">=</span> <span class="mi">1504</span><span class="p">,</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// One ethernet packet.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">packet</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>         <span class="c1">// length of packet</span>
-</span><span class='line'>    <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="n">PACKET_SIZE</span><span class="p">];</span>      <span class="c1">// on-the-wire packet data</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Ring buffer containing ethernet packets.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">ring</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">head</span><span class="p">;</span>           <span class="c1">// position of first unread packet</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tail</span><span class="p">;</span>           <span class="c1">// position of last unread packet</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">overflow_count</span><span class="p">;</span> <span class="c1">// number of packets dropped due to overflow</span>
-</span><span class='line'>    <span class="k">struct</span> <span class="n">packet</span> <span class="n">packets</span><span class="p">[</span><span class="n">RING_SIZE</span><span class="p">];</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Ethernet device with two ring buffers for transmit and receive.</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">dev</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">magic</span><span class="p">;</span>          <span class="c1">// magic number identifying the structure</span>
-</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">version</span><span class="p">;</span>        <span class="c1">// version of memory layout</span>
-</span><span class='line'>    <span class="k">struct</span> <span class="n">ring</span> <span class="n">dev2host</span><span class="p">;</span>        <span class="c1">// ring of packets from host to device</span>
-</span><span class='line'>    <span class="k">struct</span> <span class="n">ring</span> <span class="n">host2dev</span><span class="p">;</span>        <span class="c1">// ring of packets from device to host</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here&#8217;s a snippet using the data structure from C:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">bool</span> <span class="nf">is_empty</span><span class="p">(</span><span class="k">struct</span> <span class="n">ring</span> <span class="n">ring</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">ring</span><span class="o">-&gt;</span><span class="n">head</span> <span class="o">==</span> <span class="n">ring</span><span class="o">-&gt;</span><span class="n">tail</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and here&#8217;s a snippet from LuaJIT:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="k">function</span> <span class="nf">is_full</span> <span class="p">(</span><span class="n">ring</span><span class="p">)</span>
-</span><span class='line'>   <span class="k">return</span> <span class="n">ring</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="p">(</span><span class="n">ring</span><span class="p">.</span><span class="n">tail</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">C</span><span class="p">.</span><span class="n">RING_SIZE</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and with any luck I&#8217;ll find an excuse to see how it looks in a hardware description language like Verilog too.</p>
-
-<p>That&#8217;s all. I really appreciate shared memory. Hardware people use it all the time. It&#8217;s not the most high level communication protocol around, but it is simple and accessible, and it can be fun for software people too. I think so, anyway :-)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -996,6 +920,10 @@ days was still a library in the old sense of the term.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/04/03/snabb-my-lab/">Snabb - my lab</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/04/cute-code/">Cute code</a>
       </li>
     
@@ -1009,10 +937,6 @@ days was still a library in the old sense of the term.</p></blockquote>
     
       <li class="post">
         <a href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">Snabb Switch&#8217;s LuaJIT Ethernet device driver</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/12/08/tech-mesh-2012-trip-report/">Tech Mesh 2012 Trip Report</a>
       </li>
     
   </ul>

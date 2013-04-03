@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Snabb | Luke Gorrie's blog]]></title>
+  <title><![CDATA[Category: snabb | Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//blog/categories/snabb/atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-02-04T16:26:26+01:00</updated>
+  <updated>2013-04-03T15:30:34+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -14,63 +14,34 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Readable programs]]></title>
-    <link href="http://blog.lukego.com//blog/2012/10/24/readable-programs/"/>
-    <updated>2012-10-24T17:33:00+02:00</updated>
-    <id>http://blog.lukego.com//blog/2012/10/24/readable-programs</id>
-    <content type="html"><![CDATA[<p>I love readable programs. I mean: programs that you can print out, take to the park, and read from top to bottom. The reason I love readable programs is that somebody has made the effort to make them readable, perhaps simply by priting them out and running through them with a red pen a few times, and I believe this simple process to have a magical effect on a program's clarity.</p>
+    <title type="html"><![CDATA[Snabb - my lab]]></title>
+    <link href="http://blog.lukego.com//blog/2013/04/03/snabb-my-lab/"/>
+    <updated>2013-04-03T14:42:00+02:00</updated>
+    <id>http://blog.lukego.com//blog/2013/04/03/snabb-my-lab</id>
+    <content type="html"><![CDATA[<p>I love my little company, <a href="http://snabb.co/">Snabb</a>. It is <a href="http://sivers.org/laboratory">my laboratory</a>.</p>
 
-<p>I believe that making programs readable is one of the best and easiest ways to improve them.</p>
+<p>My lab makes me productive in society. I write really cool open source code for anybody to use, and I earn money by traveling around <strong>meeting interesting people</strong> and helping them to solve important problems. I have "hard fun" looking for ways to do these things in harmony.</p>
 
-<p>I gather that it used to be a common practice to print program listings and read them. I hear about it in anecdotes from programmers I respect, and I also see that many older programs appear to have been written with printing and readnig in mind: they contain pagebreak characters; they include their user-documentation in comments; and they are broken into logical sections of a couple of pages or so.</p>
+<p>My lab is where I can <strong>be creative</strong>. I can ask myself, after 25 years of thoughtful programming, <em>what's the right way to do fast ethernet I/O?</em> and then develop my answer: a small <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel10g.lua">10G Ethernet device driver</a> written in LuaJIT and embedded in the application. Fun!</p>
 
-<p>Let me share some quotations that have stuck in my memory:</p>
+<p>My lab lets me <strong>work with friendly people</strong> in the open source world. I get to take part in the conversation on how to write networking software, and I can collaborate on equal footing with other clever hackers who have their own interests and labs, big and small.</p>
 
-<blockquote><p>The mask layout program by BillCroft at Purdue EE department - This
-is a truly awesome C program that could do VLSI scale designs on a
-PDP-11. The implementation included the command processing,
-high-resolution graphics, and custom database. Amazingly the program
-was only about half an inch thick and could be read in an afternoon.
-(Contrast this to my own companies' graphics drivers for the same
-device which ran ten times this for the drivers alone.)</p></blockquote>
+<p>My lab lets me <strong>buy fun toys</strong> (without asking permission :-)). Any day now I will receive a <a href="https://groups.google.com/forum/?fromgroups=#!topic/snabb-devel/vUd2DZZ-ctw">server with twenty 10G ethernet ports</a> to share with everybody hacking on the <a href="http://snabb.co/snabbswitch/">Snabb Switch</a> project. We get to break new ground together in the spirit of creative fun.</p>
 
-<p>-- <a href="http://c2.com/cgi/wiki?PleaseShowMeAlargeWellFactoredProgram">Ward Cunningham, WardsWiki</a></p>
+<p>My lab lets me create software of <strong>enduring value</strong>. I do not have to constrain my code with secrecy and license restrictions, which means that it can take on a life of its own. The software can follow its own strong tendency to spread and thrive. I have just given a talk about SLIME at the first Emacs conference -- 10-year-old work on a 37-year-old editor is still in widespread use!</p>
 
-<blockquote><p>I was the one who decided to rewrite the [program listing generator]
-from scratch as a standalone program, partly because I wanted to add
-substantial new facilities, such as the ability to list many files at
-once and provide inter-file cross-references.</p></blockquote>
+<p>My lab lets me <strong>choose</strong> to do all of these things, all by myself, and it would let me choose to do something completely different if that was what I wanted. It lets me decide when to work from my house in the Swiss Alps, a beach in Thailand, my family's home in Australia, a cosy cafe in a big city, or a friendly office. It makes me abundantly wealthy in freedom and independence.</p>
 
-<p>-- <a href="http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg02724.html">Guy Steele, ll1-discuss</a></p>
+<p>In summary I feel that I am close to a local maximum for <strong>creativity and freedom</strong>.</p>
 
-<blockquote><p>Programming is, among other things, a kind of writing. One way to
-learn writing is to write, but in all other forms of writing, one also
-reads. We read examples - both good and bad - to facilitate learning.
-But how many programmers learn to write programs by reading programs?
-A few, but not many. And with the advent of terminals, things are
-getting worse, for the programmer may not even see his own program in
-a form suitable for reading. In the old days ... programmers would
-while away the time by reading each others' programs. Some even went
-so far as to read programs from the program library - which in those
-days was still a library in the old sense of the term.</p></blockquote>
+<p>The problem has never been to "make" the company a success, but rather to <strong>preserve</strong> the great situation that I already had from the first day. On the one hand I need to avoid things like running out of money, selling shares, and signing employment contracts, and on the other hand I need to keep writing cool open source software and finding people with important problems I can help with. This way I can keep on being <a href="http://us1.campaign-archive2.com/?u=ebf088d153799238adff7f681&amp;id=5e842b4e52">proud</a> of my company.</p>
 
-<p>-- <a href="http://www.amazon.com/The-Psychology-Computer-Programming-Anniversary/dp/0932633420">Gerald Weinberg, The Psychology of Computer Programming</a></p>
+<blockquote>
+A man is a success if he wakes up in the morning and goes to bed at night and in between does what he wants to do.- Bob Dylan
+</blockquote>
 
-<p>How different things used to be. People measured programs in "thickness", wrote special listing generators (in <a href="http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg02718.html">300 pages of PDP-10 assembler</a> - quite an effort), and dreaded that one day people may not sit down and read programs, not even their own.</p>
 
-<p>I know it's easy to feel that with our fancy IDEs we've advanced beyond such archaic ideas, but I believe that reading whole programs is a Good Thing and worth holding on to.</p>
-
-<p>I've done a few experiments with readable programs over the years. The first one was about 10 years ago, a program listing generator called <a href="http://discontinuity.info/~pkhuong/pbookc.pdf">pbook.el</a>. pbook itself actually sucks - it's way too much code and way too much commentary - but <a href="http://fresh.homeunix.net/~luke/misc/erlang/regtest.pdf">regtest.erl</a> is one reasonable example use from my professional life. I wrote another listing generator called <code>elit.el</code> that was intended to mimic Steele's style with RABBIT but this program sucked too for the same reasons. I'm not sure that listing generators are really needed, at least for short programs like <a href="http://fresh.homeunix.net/~luke/misc/python/bets.py.txt">bets.py</a>. Early versions of <a href="http://en.wikipedia.org/wiki/SLIME">SLIME</a> were quietly pbook-formatted and I used to read them through without mentioning it to anybody.</p>
-
-<p>So why blog about this now?</p>
-
-<p>I'm working on a new project called <a href="http://www.github.com/SnabbCo/snabbswitch/">Snabb Switch</a>. I want the Snabb Switch code to be really good, so I'm very tempted to make it readable. I'm starting to think about what could be a practical tool for generating a program listing roughly the size of a small book, with chapters like "Intel NIC device driver", "OpenFlow forwarding engine", and so on.</p>
-
-<p>The idea I'm playing with at the moment is to have a 'make' target to publish the Snabb Switch on <a href="http://www.leanpub.com/">Leanpub</a>. This way I can calmly read through my source code with a red pen on my train rides between Zurich and the Alps. I expect that this would increase the quality of my source code overall and be well worth the effort, quite independent of whether other people decide to read the program too.</p>
-
-<p>I've at least made one pleasing discovery: thanks to the beauty of Markdown I'm now able to write a version of pbook that is down from 241 lines to a mere 43 characters: <code>sed -E -e 's/^/    /g' -e 's/^    --- ?//g'</code>. (See my <a href="https://gist.github.com/3945964">Gist</a> for a few more details.)</p>
-
-<p>So that is my brain dump for today. Are you also interested in readable programs? Feel free to strike up a conversation with me on <code>luke@snabb.co</code>.</p>
+<p>Know what I mean? I would be happy to <strong>hear from you</strong> on luke@snabb.co.</p>
 ]]></content>
   </entry>
   
