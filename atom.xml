@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-04-03T23:21:41+02:00</updated>
+  <updated>2013-04-13T20:03:48+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Routing traffic between local applications on Linux]]></title>
+    <link href="http://blog.lukego.com//blog/2013/04/13/routing-traffic-between-local-applications-on-linux/"/>
+    <updated>2013-04-13T19:48:00+02:00</updated>
+    <id>http://blog.lukego.com//blog/2013/04/13/routing-traffic-between-local-applications-on-linux</id>
+    <content type="html"><![CDATA[<p>Want to create a really interesting virtual network on your own host and test it with ordinary applications? Great! Here is how.</p>
+
+<p>We will make the address <code>192.168.100.1</code> act like <code>127.0.0.1</code> but route packets through a custom network topology before processing them.</p>
+
+<p>First start with any custom topology. In this example: <code>west</code> and <code>east</code> are endpoints with an Open vSwitch bridge <code>ovs</code> in between. (This would be great for applying OpenFlow rules to packets sent between local applications.)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip link add west type veth peer name west_to_ovs
+</span><span class='line'>ip link add east type veth peer name east_to_ovs
+</span><span class='line'>
+</span><span class='line'>ovs-vsctl add-br ovs
+</span><span class='line'>ovs-vsctl add-port ovs west_to_ovs
+</span><span class='line'>ovs-vsctl add-port ovs east_to_ovs
+</span><span class='line'>
+</span><span class='line'>for i in west west_to_ovs east east_to_ovs ovs; do
+</span><span class='line'>  ip link set $i up
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now assign addresses and routes for these interfaces. Packets sent to <code>192.168.100.1</code> should first be routed into interface <code>west</code> then switched via <code>ovs</code> and finally delivered to <code>east</code> for processing.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip addr add 192.168.100.2 dev west
+</span><span class='line'>ip addr add 192.168.100.1 dev east
+</span><span class='line'>
+</span><span class='line'>ip route add 192.168.100.1 dev west
+</span><span class='line'>ip route add 192.168.100.2 dev east</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The ingredients are in place but they don&#8217;t <em>work</em> yet. If you ping <code>192.168.100.1</code> then the packets are sent to <code>lo</code> instead of being routed through the bridge.</p>
+
+<p>And that brings us to the trick: <a href="http://lartc.org/howto/lartc.rpdb.html">Policy Routing</a>.</p>
+
+<p>First make Linux globally &#8220;forget&#8221; that these addresses are local.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip route del 192.168.100.2 table local
+</span><span class='line'>ip route del 192.168.100.1 table local</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now packets sent to <code>192.168.100.1</code> do get routed down the right path. They are not processed at the other end though, because Linux does not remember they are local. We are half way there.</p>
+
+<p>Next create separate routing tables strictly for when packets received after they have traversed the tunnel. These tables remember that the addresses are local.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip rule add iif west lookup 100
+</span><span class='line'>ip route add local 192.168.100.2 dev west table 100
+</span><span class='line'>echo 1 &gt; /proc/sys/net/ipv4/conf/west/accept_local
+</span><span class='line'>
+</span><span class='line'>ip rule add iif east lookup 101
+</span><span class='line'>ip route add local 192.168.100.1 dev east table 101
+</span><span class='line'>echo 1 &gt; /proc/sys/net/ipv4/conf/east/accept_local</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are done!</p>
+
+<p>If you connect to <code>192.168.100.1</code> then your packets will first traverse the bridge and then be processed locally. The setup is symmetric so that return traffic will be routed back through the bridge too. This will work with all your favourite programs like <code>ping</code>, <code>curl</code>, <code>apache</code>, etc. Check it out by running <code>tcpdump</code> on <code>west</code> or <code>east</code>.</p>
+
+<p>Go ahead and create interesting virtual networks on your own machine.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Snabb - my lab]]></title>

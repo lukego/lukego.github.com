@@ -9,7 +9,7 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Today I&#8217;m feeling appreciative of shared memory. There are a lot of communication mechanisms in widespread use: C APIs, system calls, RESTful &hellip;">
+  <meta name="description" content="Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea. The Nehalem architecture looks like this: So &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -49,7 +49,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Luke Gorrie's blog</a></h1>
   
-    <h2>Current mission: Develop Snabb Switch and launch it into the world</h2>
+    <h2>21st Century Network Hacking</h2>
   
 </hgroup>
 
@@ -76,6 +76,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/02/nehalem-i-slash-o-performance/">Intel&#8217;s Performance Counter Monitor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-02T17:33:00+02:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea.</p>
+
+<p>The Nehalem architecture looks like this:<br>
+<a href="http://www.qdpma.com/SystemArchitecture/SystemArchitecture_QPI.html">
+<img src="/images/Xeon5500_1IOH.png" alt="Nehalem Architecture" />
+</a></p>
+
+<p>So the main potential bottlenecks are:</p>
+
+<ol>
+<li>RAM<->CPU @ approx 256Gbps to each CPU&#8217;s RAM bank. (Too many memory copies?)</li>
+<li>CPU<->CPU @ approx 200Gbps for sharing RAM over <a href="http://en.wikipedia.org/wiki/Intel_QuickPath_Interconnect">QPI</a>. (NUMA all mucked up?)</li>
+<li>PCIe @ approx 72Gbps. (Out of ports? Crappy motherboard?)</li>
+<li>Storage disk/SSD. (Waiting all the time?)</li>
+</ol>
+
+
+<p>Intel&#8217;s <a href="http://software.intel.com/en-us/articles/intel-performance-counter-monitor/">Performance Counter Monitor</a> can tell you the utilization of these links. It&#8217;s like <code>top</code> for memory bandwidth, inter-processor data shuffling, PCIe load, etc. I used this tool for verifying that PCs can push 40Gbps of full-duplex ethernet traffic without any hassle. Intel make some really fine tech.</p>
+
+<p>Give it a try! It&#8217;s really easy to install.</p>
+
+<p>Here&#8217;s how it looks:</p>
+
+<pre>
+ EXEC  : instructions per nominal CPU cycle
+ IPC   : instructions per CPU cycle
+ FREQ  : relation to nominal CPU frequency='unhalted clock ticks'/'invariant timer ticks' (includes Intel Turbo Boost)
+ AFREQ : relation to nominal CPU frequency while in active state (not in power-saving C state)='unhalted clock ticks'/'invariant timer ticks while in C0-state'  (includes Intel Turbo Boost)
+ L3MISS: L3 cache misses 
+ L2MISS: L2 cache misses (including other core's L2 cache *hits*) 
+ L3HIT : L3 cache hit ratio (0.00-1.00)
+ L2HIT : L2 cache hit ratio (0.00-1.00)
+ L3CLK : ratio of CPU cycles lost due to L3 cache misses (0.00-1.00), in some cases could be >1.0 due to a higher memory latency
+ L2CLK : ratio of CPU cycles lost due to missing L2 cache but still hitting L3 cache (0.00-1.00)
+ READ  : bytes read from memory controller (in GBytes)
+ WRITE : bytes written to memory controller (in GBytes)
+
+
+ Core (SKT) | EXEC | IPC  | FREQ  | AFREQ | L3MISS | L2MISS | L3HIT | L2HIT | L3CLK | L2CLK  | READ  | WRITE 
+
+   0    0     0.59   0.60   0.98    1.00    1743 K   3978 K    0.56    0.62    0.15    0.07     N/A     N/A
+   1    0     0.61   0.62   0.97    1.00    2595 K   3356 K    0.23    0.64    0.23    0.02     N/A     N/A
+   2    0     0.49   0.59   0.83    1.00    2205 K   3198 K    0.31    0.60    0.22    0.03     N/A     N/A
+   3    0     0.06   0.32   0.18    1.00     715 K    921 K    0.22    0.35    0.34    0.02     N/A     N/A
+------------------------------------------------------------------------------------------------------------
+ TOTAL  *     0.43   0.59   0.74    1.00    7259 K     11 M    0.37    0.61    0.21    0.04    6.51    2.85
+
+ Instructions retired: 3707 M ; Active cycles: 6317 M ; Time (TSC): 2134 Mticks ; C0 (active,non-halted) core residency: 73.99 %
+
+ PHYSICAL CORE IPC                 : 0.59 => corresponds to 14.67 % utilization for cores in active state
+ Instructions per nominal CPU cycle: 0.43 => corresponds to 10.86 % core utilization over time interval
+----------------------------------------------------------------------------------------------
+</pre>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -274,6 +363,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/04/13/routing-traffic-between-local-applications-on-linux/">Routing traffic between local applications on Linux</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/04/03/snabb-my-lab/">Snabb - my lab</a>
       </li>
     
@@ -287,10 +380,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass networking</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/03/snabb-switchs-luajit-ethernet-device-driver/">Snabb Switch&#8217;s LuaJIT Ethernet device driver</a>
       </li>
     
   </ul>

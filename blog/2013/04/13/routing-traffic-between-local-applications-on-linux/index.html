@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Routing traffic between local applications on Linux - Luke Gorrie's blog</title>
+  <meta name="author" content="Luke Gorrie">
+
+  
+  <meta name="description" content="Want to create a really interesting virtual network on your own host and test it with ordinary applications? Great! Here is how. We will make the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.lukego.com//blog/2013/04/13/routing-traffic-between-local-applications-on-linux/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Luke Gorrie's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-33510863-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Luke Gorrie's blog</a></h1>
+  
+    <h2>21st Century Network Hacking</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.lukego.com/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Routing Traffic Between Local Applications on Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T19:48:00+02:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Want to create a really interesting virtual network on your own host and test it with ordinary applications? Great! Here is how.</p>
+
+<p>We will make the address <code>192.168.100.1</code> act like <code>127.0.0.1</code> but route packets through a custom network topology before processing them.</p>
+
+<p>First start with any custom topology. In this example: <code>west</code> and <code>east</code> are endpoints with an Open vSwitch bridge <code>ovs</code> in between. (This would be great for applying OpenFlow rules to packets sent between local applications.)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip link add west type veth peer name west_to_ovs
+</span><span class='line'>ip link add east type veth peer name east_to_ovs
+</span><span class='line'>
+</span><span class='line'>ovs-vsctl add-br ovs
+</span><span class='line'>ovs-vsctl add-port ovs west_to_ovs
+</span><span class='line'>ovs-vsctl add-port ovs east_to_ovs
+</span><span class='line'>
+</span><span class='line'>for i in west west_to_ovs east east_to_ovs ovs; do
+</span><span class='line'>  ip link set $i up
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now assign addresses and routes for these interfaces. Packets sent to <code>192.168.100.1</code> should first be routed into interface <code>west</code> then switched via <code>ovs</code> and finally delivered to <code>east</code> for processing.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip addr add 192.168.100.2 dev west
+</span><span class='line'>ip addr add 192.168.100.1 dev east
+</span><span class='line'>
+</span><span class='line'>ip route add 192.168.100.1 dev west
+</span><span class='line'>ip route add 192.168.100.2 dev east</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The ingredients are in place but they don&#8217;t <em>work</em> yet. If you ping <code>192.168.100.1</code> then the packets are sent to <code>lo</code> instead of being routed through the bridge.</p>
+
+<p>And that brings us to the trick: <a href="http://lartc.org/howto/lartc.rpdb.html">Policy Routing</a>.</p>
+
+<p>First make Linux globally &#8220;forget&#8221; that these addresses are local.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip route del 192.168.100.2 table local
+</span><span class='line'>ip route del 192.168.100.1 table local</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now packets sent to <code>192.168.100.1</code> do get routed down the right path. They are not processed at the other end though, because Linux does not remember they are local. We are half way there.</p>
+
+<p>Next create separate routing tables strictly for when packets received after they have traversed the tunnel. These tables remember that the addresses are local.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ip rule add iif west lookup 100
+</span><span class='line'>ip route add local 192.168.100.2 dev west table 100
+</span><span class='line'>echo 1 &gt; /proc/sys/net/ipv4/conf/west/accept_local
+</span><span class='line'>
+</span><span class='line'>ip rule add iif east lookup 101
+</span><span class='line'>ip route add local 192.168.100.1 dev east table 101
+</span><span class='line'>echo 1 &gt; /proc/sys/net/ipv4/conf/east/accept_local</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we are done!</p>
+
+<p>If you connect to <code>192.168.100.1</code> then your packets will first traverse the bridge and then be processed locally. The setup is symmetric so that return traffic will be routed back through the bridge too. This will work with all your favourite programs like <code>ping</code>, <code>curl</code>, <code>apache</code>, etc. Check it out by running <code>tcpdump</code> on <code>west</code> or <code>east</code>.</p>
+
+<p>Go ahead and create interesting virtual networks on your own machine.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Luke Gorrie</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T19:48:00+02:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux-/'>Linux,</a>, <a class='category' href='/blog/categories/networking/'>Networking</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.lukego.com//blog/2013/04/13/routing-traffic-between-local-applications-on-linux/" data-via="lukego" data-counturl="http://blog.lukego.com//blog/2013/04/13/routing-traffic-between-local-applications-on-linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/04/03/snabb-my-lab/" title="Previous Post: Snabb - my lab">&laquo; Snabb - my lab</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Check me out!</h1>
+  <p>
+    Personal: <a href="http://www.lukego.com/">My homepage</a><br/>
+    Hacking: <a href="http://www.github.com/SnabbCo/snabbswitch">Snabb Switch</a><br/>
+    Professional: <a href="http://www.snabb.co/">Snabb</a>
+    <a href="http://www.snabb.co/"><img src="http://www.snabb.co/Tiger_snabb_128.png" alt="Snabb logo"/></a>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/13/routing-traffic-between-local-applications-on-linux/">Routing traffic between local applications on Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/03/snabb-my-lab/">Snabb - my lab</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/02/04/cute-code/">Cute code</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/05/kernel-bypass-networking-in-snabb-switch/">Snabb Switch's kernel-bypass networking</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass networking</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("lukego", 5, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/lukego" class="twitter-follow-button" data-show-count="false">Follow @lukego</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Luke Gorrie -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
