@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-04-13T20:03:48+02:00</updated>
+  <updated>2013-04-13T23:21:36+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -74,7 +74,7 @@
 
 <p>Now packets sent to <code>192.168.100.1</code> do get routed down the right path. They are not processed at the other end though, because Linux does not remember they are local. We are half way there.</p>
 
-<p>Next create separate routing tables strictly for when packets received after they have traversed the tunnel. These tables remember that the addresses are local.</p>
+<p>Next create separate routing tables strictly for when packets are received after they have traversed the switch. These tables remember that the addresses are local.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
