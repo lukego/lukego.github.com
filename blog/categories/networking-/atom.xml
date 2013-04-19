@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Networking, | Luke Gorrie's blog]]></title>
+  <link href="http://blog.lukego.com//blog/categories/networking-/atom.xml" rel="self"/>
+  <link href="http://blog.lukego.com//"/>
+  <updated>2013-04-19T09:57:20+02:00</updated>
+  <id>http://blog.lukego.com//</id>
+  <author>
+    <name><![CDATA[Luke Gorrie]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Recent talks]]></title>
+    <link href="http://blog.lukego.com//blog/2013/04/19/recent-talks/"/>
+    <updated>2013-04-19T09:42:00+02:00</updated>
+    <id>http://blog.lukego.com//blog/2013/04/19/recent-talks</id>
+    <content type="html"><![CDATA[<p>I have given a few talks recently:</p>
+
+<p><a href="http://www.youtube.com/watch?v=eZDWJfB9XY4&amp;list=PL4th0AZixyRE9bb8OevAb7I8RuaWJQWnO">SLIME at the Emacs Conference</a> (16 min). History of the <a href="http://en.wikipedia.org/wiki/SLIME">SLIME</a> project and tips for people writing new Emacs-based IDEs.</p>
+
+<p><a href="http://cast.switch.ch/vod/clips/relq1zlrq/">Snabb Switch at the Swiss OpenStack User Group</a> (8 min). Introducing the <a href="http://snabb.co/snabbswitch/">Snabb Switch</a> project to people in the local OpenStack cloud computing community.</p>
+
+<p><a href="http://cast.switch.ch/vod/clips/26uo9i576i/">Snabb Switch at the EduPERT workshop</a> (27 min). What networking problems can you address with x86 servers? and more on Snabb Switch.</p>
+
+<p><a href="http://blip.tv/eclm/eclm2011-luke-gorrie-6263137">Teclo Networks at ECLM 2011</a> (40 min). The early days of <a href="http://www.teclo.net/">teclo.net</a> the telecom startup company founded by Common Lisp hackers.</p>
+
+<p>This has been really fun!</p>
+]]></content>
+  </entry>
+  
+</feed>

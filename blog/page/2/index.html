@@ -9,7 +9,7 @@
   <meta name="author" content="Luke Gorrie">
 
   
-  <meta name="description" content="Wanna find the limiting factor in I/O performance on an Intel Nehalem server app? Here&#8217;s one idea. The Nehalem architecture looks like this: So &hellip;">
+  <meta name="description" content="Hoi Z&auml;me! This post is a tribute to the Emerging Languages conference that I just missed. I&#8217;ve started a new project called Snabb Switch &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -49,7 +49,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Luke Gorrie's blog</a></h1>
   
-    <h2>Current mission: Develop Snabb Switch and launch it into the world</h2>
+    <h2>21st Century Network Hacking</h2>
   
 </hgroup>
 
@@ -76,6 +76,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/25/lukes-highly-opinionated-programming-language-roundup-2012/">Luke&#8217;s Highly Opinionated Programming Language Roundup 2012</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-25T11:26:00+02:00" pubdate data-updated="true">Sep 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hoi Z&auml;me!</p>
+
+<p>This post is a tribute to the <a href="http://emerginglangs.com">Emerging Languages conference</a> that I just missed. I&#8217;ve started a new project called <a href="http://www.github.com/SnabbCo/snabbswitch">Snabb Switch</a> and this is a braindump on how I&#8217;m choosing which programming language to use.</p>
+
+<p>The Snabb Switch project is a low-level networking stack with emphasis on hypervisors. The #1 technical requirement is that you&#8217;re receiving a packet every microsecond or so and you have to do something clever with it and ship it back out quickly. I have a background of real programming in a bunch of languages: C, Erlang, Common Lisp, Scheme, Forth, Smalltalk, Emacs Lisp, Java, and the usual Unix suspects. I have the engineering philosophy of a firmware developer: I appreciate minimalism and I don&#8217;t want to depend on software that I&#8217;m not willing to understand and debug (less is more). I want to faithfully follow my own engineering values and simultaneously make the project accessible to other interested people.</p>
+
+<p>Here are the languages on my radar for this project and a raw dump of my thoughts on them:</p>
+
+<p>C. In my mind some code just is morally C code, no matter what language it&#8217;s written in, and other code morally is not C. I like to use C for code that&#8217;s morally C, like device drivers and packet shuffling, but I don&#8217;t want to use C for stuff that&#8217;s morally high-level, like configuration and status reporting and scripting. So I&#8217;m only happy to use C for problems that are 100% low-level or otherwise in a cocktail with a higher-level language.</p>
+
+<p>C++. I am impressed when I see people use C++ to overcome the limitations of C and find clever ways to write whole applications. They win the ICFP programming contest pretty often and that impresses me. My gut feeling though is that this works well in tight organisations like Google but that C++ is a barrier to entry in more loosely coupled open source projects. The language also has a bit of a corporate feel to me &#8211; I&#8217;ve never picked up a C++ book just for fun. The C hacker in me is jealous the good collection of basic data structures though.</p>
+
+<p>Objective-C. This is another chance to keep what&#8217;s good about C and overcome the limitations. I don&#8217;t want to commit to OSX as the target platform though &#8211; I&#8217;m focused on Linux and open to Windows &#8211; and I&#8217;m not confident that it&#8217;s portable in practice.</p>
+
+<p>Erlang. I have done a <i>lot</i> of Erlang programming over the years and I know that it&#8217;s really excellent for a wide range of problems. I don&#8217;t want to use it for this project though. Erlang isn&#8217;t the right tool for writing morally-C code, and I haven&#8217;t really enjoyed using the FFI (linked-in drivers) in the past. I also feel that the Erlang runtime system is a really scary program these days &#8211; I don&#8217;t want to have to chase through it with gdb when hunting really tough bugs.</p>
+
+<p><a href="http://www.sbcl.org/">SBCL</a>. Common Lisp is an extremely interesting option and one that I&#8217;ve <a href="http://lisp-univ-etc.blogspot.ch/2012/07/lisp-hackers-luke-gorrie-his-eclm-video.html">explored in depth previously</a>. You can write morally-C code in Common Lisp, but I feel like you <a href="http://www.paulgraham.com/carl.html">have to work really hard</a> when you do this, and I prefer to do my bit-bashing in C. CFFI is not quite convenient enough to make this fun for me in day to day usage. The SBCL runtime system is also of a similar complexity level to Erlang and I&#8217;ve found that it interacts badly with tools like strace and gdb. I don&#8217;t want to be chasing weird bugs involving e.g. signal handlers waking up when I write to memory that the GC has write-protected etc.</p>
+
+<p><a href="http://ecls.sourceforge.net">Embedded Common Lisp (ECL)</a>. Is this a Lisp with a dream-like FFI and minimalist runtime system? I&#8217;m not sure, it sounds a bit too good to be true, and I haven&#8217;t investigated because I don&#8217;t have a specific agenda to use Lisp. I would love to hear from people who have experience building systems comparable to Snabb Switch in ECL.</p>
+
+<p><a href="http://www.openfirmware.info/Open_Firmware">Openfirmware</a>. Mitch Bradley&#8217;s Openfirmware Forth system is a masterpiece and in many ways very well suited to my project. Compact size, good mix of high-level (bytecode) and low-level (inline assembler), minimal and predictable runtime system, suitable for writing morally-C code. I reckon that Openfirmware based network equipment would work extremely well, but I also reckon that very few people could build such systems in a realistic amount of time. Forth is also naturally a barrier to adoption: it&#8217;s tricky to get the hang of and the study of Forth feels more like advanced computer science than basic engineering. So rather than use Forth I will seek out other tools that are acceptable to my inner Forth programmer.</p>
+
+<p><a href="http://www.luajit.org/">LuaJIT</a>. Wow! Lots of positive points. The whole implementation is small and simple. The runtime system is minimal and leaves me space to make important decisions like whether to use threads and how. The FFI is the best I&#8217;ve ever seen &#8211; it makes it easy to talk directly to hardware via shared memory and easy to call into C libraries. I can use a lovely workflow where morally-C code is initially written in LuaJIT and be selectively rewritten in C over time. The JIT is creating its own machine code in Forth-hacker real programmer style &#8211; I don&#8217;t understand it but I <em>want</em> to, and its small implementation makes this seem realistic. And there&#8217;s a <a href="http://www.freelists.org/post/luajit/LuaJIT-in-realtime-applications,3">reasonable story on soft realtime</a>.</p>
+
+<p>So: I&#8217;ve started off using LuaJIT and C. Initially the code is mostly LuaJIT but I do feel like I&#8217;m comfortably able to move the LuaJIT-C border around to see where it feels the best. This feels comfortable for the parts of my soul that love C, Forth, Scheme, and Emacs Lisp. The bits of my soul that love Erlang, Common Lisp, and Smalltalk will have to be patient :-).</p>
+
+<p>I will blog about how it goes over time. If you want to discuss this stuff in more depth feel free to email me on <tt>luke@snabb.co</tt>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -363,6 +425,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/04/19/recent-talks/">Recent talks</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/04/13/routing-traffic-between-local-applications-on-linux/">Routing traffic between local applications on Linux</a>
       </li>
     
@@ -376,10 +442,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/05/kernel-bypass-networking-in-snabb-switch/">Snabb Switch&#8217;s kernel-bypass networking</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/04/kernel-bypass-networking/">Kernel-bypass networking</a>
       </li>
     
   </ul>
