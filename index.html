@@ -163,7 +163,7 @@ tempting for me to share little snippets of code.</p>
 <li>On one Xeon core it handles 12 million packets per second spread across <a href="https://github.com/SnabbCo/snabbswitch/wiki/Snabb-Lab">20 x 10GbE network ports</a>. This loop runs in about 85 nanoseconds per packet. And there is heaps of room for optimization left, both in the single-core and multi-core contexts.</li>
 <li>It uses device drivers directly. The <code>input</code> and <code>output</code> objects are each one of our drivers for Intel 1G, <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel10g.lua">Intel 10G</a>, or <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/virtio.lua">Virtio</a> ethernet devices. The &#8220;buffers&#8221; are blocks of physical memory that are directly used for hardware DMA.</li>
 <li>It&#8217;s written in a pretty natural style and yet doesn&#8217;t need to garbage collect. The only objects being frequently allocated and freed are the packet buffers, and those are straightforwardly reference counted with <code>buffer.ref()</code> and <code>buffer.deref()</code>.</li>
-<li>There are no confusing concepts like processor interrupts, locks, or special memory allocation flags. It&#8217;s plain and simple high-level user space code just like, say, the Javascript on a web page.</li>
+<li>There are no confusing concepts like abrupt processor interrupts, threads, locks, or special memory allocation flags. It&#8217;s plain and simple high-level user space code just like, say, the Javascript on a web page.</li>
 </ol>
 
 
