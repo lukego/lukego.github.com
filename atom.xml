@@ -4,7 +4,7 @@
   <title><![CDATA[Luke Gorrie's blog]]></title>
   <link href="http://blog.lukego.com//atom.xml" rel="self"/>
   <link href="http://blog.lukego.com//"/>
-  <updated>2013-04-19T10:00:20+02:00</updated>
+  <updated>2013-06-23T14:22:51+02:00</updated>
   <id>http://blog.lukego.com//</id>
   <author>
     <name><![CDATA[Luke Gorrie]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Echoing packets with Snabb Switch]]></title>
+    <link href="http://blog.lukego.com//blog/2013/06/23/echoing-packets-with-snabb-switch/"/>
+    <updated>2013-06-23T14:10:00+02:00</updated>
+    <id>http://blog.lukego.com//blog/2013/06/23/echoing-packets-with-snabb-switch</id>
+    <content type="html"><![CDATA[<p>Just for fun, here is an example low-level network program written
+with Snabb Switch&#8217;s low-level ethernet I/O layer. It&#8217;s part of the
+basic selftest code in
+<a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/port.lua"><code>port.lua</code></a>.
+The coding style is starting to settle down lately and so it&#8217;s more
+tempting for me to share little snippets of code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='lua'><span class='line'><span class="k">function</span> <span class="nf">Port</span><span class="p">:</span><span class="n">echo</span> <span class="p">()</span>
+</span><span class='line'>   <span class="kd">local</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">outputs</span>
+</span><span class='line'>   <span class="k">repeat</span>
+</span><span class='line'>      <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="o">#</span><span class="n">inputs</span> <span class="k">do</span>
+</span><span class='line'>         <span class="kd">local</span> <span class="n">input</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>         <span class="n">input</span><span class="p">:</span><span class="n">sync_receive</span><span class="p">()</span>
+</span><span class='line'>         <span class="k">while</span> <span class="n">input</span><span class="p">:</span><span class="n">can_receive</span><span class="p">()</span> <span class="ow">and</span> <span class="n">output</span><span class="p">:</span><span class="n">can_transmit</span><span class="p">()</span> <span class="k">do</span>
+</span><span class='line'>            <span class="kd">local</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">input</span><span class="p">:</span><span class="n">receive</span><span class="p">()</span>
+</span><span class='line'>            <span class="n">output</span><span class="p">:</span><span class="n">transmit</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">buffer</span><span class="p">.</span><span class="n">deref</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</span><span class='line'>         <span class="k">end</span>
+</span><span class='line'>         <span class="k">while</span> <span class="n">input</span><span class="p">:</span><span class="n">can_add_receive_buffer</span><span class="p">()</span> <span class="k">do</span>
+</span><span class='line'>            <span class="n">input</span><span class="p">:</span><span class="n">add_receive_buffer</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">allocate</span><span class="p">())</span>
+</span><span class='line'>         <span class="k">end</span>
+</span><span class='line'>         <span class="n">output</span><span class="p">:</span><span class="n">sync_transmit</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">C</span><span class="p">.</span><span class="n">usleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">until</span> <span class="nb">coroutine.yield</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">echo&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Reasonably easy to understand, I hope?</p>
+
+<p>The features of this program that I would like to draw attention to are:</p>
+
+<ol>
+<li>It is written in a high-level language, <a href="http://luajit.org/">LuaJIT</a>.</li>
+<li>It can handle about 12 million packets per second while handling 20 x 10GbE network ports with a single Xeon core. That&#8217;s about 85 nanoseconds per packet. And there is heaps of room for optimization left, both in the single-core and multi-core contexts.</li>
+<li>It uses device drivers directly. The <code>input</code> and <code>output</code> objects are each one of our drivers for Intel 1G, <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/intel10g.lua">Intel 10G</a>, or <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/virtio.lua">Virtio</a> ethernet devices. The &#8220;buffers&#8221; are blocks of physical memory that are directly used for hardware DMA.</li>
+<li>It&#8217;s written in a pretty natural style and yet doesn&#8217;t need to garbage collect. The only objects being frequently allocated and freed are the packet buffers, and those are straightforwardly reference counted with <code>buffer.ref()</code> and <code>buffer.deref()</code>.</li>
+<li>There are no confusing concepts like processor interrupts, locks, or special memory allocation flags. It&#8217;s plain and simple high-level user space code just like, say, the Javascript on a web page.</li>
+</ol>
+
+
+<p>This my friends is a taste of how I believe most high-speed packet networking code will be written over the next decade or two. I hope you will want to write code this way too!</p>
+
+<p>If you want to know more then check out the <a href="http://snabb.co/snabbswitch/">project homepage</a>, browse the <a href="https://github.com/SnabbCo/snabbswitch/blob/master/src/">code on github</a>, or browse an <a href="http://snabb.co/misc/snabbswitch-31may2013.pdf">early draft of the book</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Recent talks]]></title>
